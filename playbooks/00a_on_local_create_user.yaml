@@ -1,0 +1,13 @@
+---
+- hosts: "localhost"
+  connection: "local"
+  vars:
+    user: pxe_user
+    pxe_user_password: $6$mysecretsalt$YeVMnERBAj7DjEXEZqKPfRwiz07vl6FTEycF/Xu4hEJqeovZ.lpkjX4ROmXhSQvQF/NvCbzBO8i3SWqxoY27H/
+  tasks:
+  - name: Add a new user named pxe_user
+    user:
+      name: "{{ user }}"
+      shell: /bin/bash
+      password: "{{ pxe_user_password }}"
+  - name: "Create ssh-key"

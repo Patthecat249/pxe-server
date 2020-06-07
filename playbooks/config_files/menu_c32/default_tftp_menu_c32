@@ -1,0 +1,26 @@
+default menu.c32
+prompt 0
+timeout 300
+ONTIMEOUT local
+
+menu title ########## PXE Boot Menu ##########
+
+label 1
+menu label ^1) Install CentOS 7.6 x64 - DVD - Kickstart/Unattended
+kernel centos7/vmlinuz
+append initrd=centos7/initrd.img inst.ks=ftp://10.0.249.60/pub/ks-centos7.6-unattended.cfg
+
+label 2
+menu label ^2) Install CentOS 7.6 x64 - Clean - Minimal - Unattended
+kernel centos7/vmlinuz
+append initrd=centos7/initrd.img inst.ks=ftp://10.0.249.60/pub/clean_minimal_centos761810.cfg
+
+label 3
+menu label ^3) Install CentOS 7.6 x64 - DVD - Manually
+kernel centos7/vmlinuz
+append  initrd=centos7/initrd.img method=ftp://10.0.249.60/pub/CentOS7.6.1810-DVD devfs=nomount 
+
+label 4
+menu label ^4) Install CentOS 7.6 x64 - DOCKER
+kernel centos7/vmlinuz
+append initrd=centos7/initrd.img inst.ks=ftp://10.0.249.60/pub/docker.cfg

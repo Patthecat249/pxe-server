@@ -1,0 +1,27 @@
+interface=NETWORK-INTERFACE-NAME,lo
+#bind-interfaces
+domain=pxe.local
+
+# DHCP range-leases
+dhcp-range= NETWORK-INTERFACE-NAME,DHCP-RANGE-START,DHCP-RANGE-END,SUBNET-MASK,1h
+
+# PXE
+dhcp-boot=DHCP-BOOT-FILE-NAME,pxeserver,PXE-SERVER-IP-ADDRESS
+
+# Gateway
+dhcp-option=3,GATEWAY
+
+# DNS
+dhcp-option=6,GATEWAY, DNS2
+server=DNS2
+
+# Broadcast Address
+dhcp-option=28,BROADCAST-ADDRESS
+
+# NTP Server
+dhcp-option=42,NTP-SERVER-IP
+
+pxe-prompt="Press F8 for menu.", 5
+pxe-service=x86PC, "Install OS from TFTP PXE-SERVER-IP-ADDRESS", pxelinux
+enable-tftp
+tftp-root=TFTP-ROOT-DIRECTORY

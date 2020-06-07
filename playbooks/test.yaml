@@ -1,0 +1,41 @@
+---
+- hosts: localhost
+  vars:
+    #DNSMASQ-Settings
+    dnsmasq_config_file: dnsmasq.conf.testfile
+    network_interface_name: ens192
+    pxe_server_ip_address: 10.0.249.60
+    gateway_ip_address: 10.0.249.1
+    dns_server_ip_address1: 10.0.249.1
+    dns_server_ip_address2: 8.8.8.8
+    dhcp_range_start: 10.0.249.61
+    dhcp_range_end: 10.0.249.65
+    ntp_ip_address: 0.0.0.0
+    dhcp_boot_option_3_gateway: 10.0.249.1
+    dhcp_boot_option_6_dns1: 8.8.8.8
+    dhcp_boot_option_6_dns2: 8.8.4.4
+    dhcp_boot_option_28_broadcast_address: 10.0.0.255
+    dhcp_boot_option_42_ntp: 0.0.0.0
+    dhcp_boot_tftp_server_ip: 10.0.249.60
+    tftp_root_directory: /var/lib/tftpboot
+    dhcp_boot_file_name: pxelinux.0
+  tasks:
+    - debug:
+        msg: "DNSMASQ-Settings"
+      with_items:
+        - { DNSMASQ-CONFIG-FILE: "{{ dnsmasq_config_file }}" }
+        - { PXE-Server-IP: "{{ pxe_server_ip_address }}" }
+        - { GATEWAY-IP: "{{ gateway_ip_address }}" }
+        - { DNS-SERVER-IP1: "{{ dns_server_ip_address1 }}" }
+        - { DNS-SERVER-IP2: "{{ dns_server_ip_address2 }}" }
+        - { DHCP-RANGE-START: "{{ dhcp_range_start }}" }
+        - { DHCP-RANGE-END: "{{ dhcp_range_end }}" }
+        - { NTP-IP-ADDRESS: "{{ ntp_ip_address }}" }
+        - { DHCP-BOOT-OPTION-3-GATEWAY: "{{ dhcp_boot_option_3_gateway }}" }
+        - { DHCP-BOOT-OPTION-6-DNS1: "{{ dhcp_boot_option_6_dns1 }}" }
+        - { DHCP-BOOT-OPTION-6-DNS2: "{{ dhcp_boot_option_6_dns2 }}" }
+        - { DHCP-BOOT-OPTION-28-BROADCAST-ADDRESS: "{{ dhcp_boot_option_28_broadcast_address }}" }
+        - { DHCP-BOOT-OPTION-42-NTP: "{{ dhcp_boot_option_42_ntp }}" }
+        - { DHCP-BOOT-TFTP-SERVER-IP: "{{ dhcp_boot_tftp_server_ip }}" }
+        - { TFTP-ROOT-DIRECTORY: "{{ tftp_root_directory }}" }
+        - { DHCP-BOOT-FILE-NAME: "{{ dhcp_boot_file_name }}" }

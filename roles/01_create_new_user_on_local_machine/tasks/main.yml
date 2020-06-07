@@ -1,0 +1,8 @@
+---
+- name: Add a new user named pxe_user
+  user:
+    name: "{{ user }}"
+    shell: /bin/bash
+    password: "{{ pxe_user_password }}"
+    state: absent
+    #remove: true
