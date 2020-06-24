@@ -1,5 +1,5 @@
 ---
-- hosts: spielwiese01
+- hosts: pxe-server
   vars:
     pxe_user_password: $6$mysecretsalt$YeVMnERBAj7DjEXEZqKPfRwiz07vl6FTEycF/Xu4hEJqeovZ.lpkjX4ROmXhSQvQF/NvCbzBO8i3SWqxoY27H/
   gather_facts: no
