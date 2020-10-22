@@ -70,12 +70,12 @@
 #    shell: "mount -o loop {{ mount_path }}{{ nfs_path_os_centos76 }} {{ mount_path_cdrom }}"
 
   - name: "Mount ISO read-only"
-    ansible.posix.mount:
+    mount:
       path: "{{ mount_path_cdrom }}"
       src: "{{ mount_path }}{{ nfs_path_os_centos76 }}"
-      fstype: iso9660
-      opts: ro,noauto
-      state: present
+      fstype: "iso9660"
+      opts: "ro,noauto"
+      state: "present"
 
 #  - name: "Extract kernel and ramdisk from a ISO"
 #    iso_extract:
