@@ -24,3 +24,8 @@ label 4
 menu label ^4) Install CentOS 7.6 x64 - DOCKER
 kernel centos7/vmlinuz
 append initrd=centos7/initrd.img inst.ks=ftp://10.0.249.60/pub/docker.cfg
+
+label 5
+menu label ^5) Install CentOS 7.7 x64 - DOCKER
+kernel kernels_initrd/centos_7.7.1908/vmlinuz
+append ip=dhcp initrd=kernels_initrd/centos_7.7.1908/initrd.img inst.repo=nfs:nas.home.local:/volume1/nfs-iso/downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso inst.ks=nfs:nas.home.local:/volume1/nfs-iso/kickstart-configs/sps1.cfg
