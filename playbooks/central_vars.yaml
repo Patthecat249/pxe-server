@@ -4,7 +4,7 @@ dnsmasq_group: "wheel"
 dns_server_ip: "10.0.249.53"
 
 # VM-Config
-hostname: "default.home.local"
+#hostname: "default.home.local"
 
 # NFS-Server-/Path-Konfiguration
 nfs_server_name: "nas.home.local"
