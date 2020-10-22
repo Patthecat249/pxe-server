@@ -74,10 +74,12 @@
     copy:
       src: "{{ mount_path_cdrom }}isolinux/vmlinuz"
       dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
+      remote_src: yes
 
 # Kopiere den INITRamDisk von CentOS76 nach kernel_initrd auf PXE-Server
   - name: "--- 07 - Kopiere VMLINUZ-Kernel nach TFTP-ROOT"
     copy:
       src: "{{ mount_path_cdrom }}isolinux/initrd.img"
       dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
+      remote_src: yes
      
