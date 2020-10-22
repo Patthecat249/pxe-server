@@ -6,3 +6,5 @@ nfs_path: "/volume1/nfs-iso/"
 nfs_path_os_centos76: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1810.iso"
 nfs_path_os_centos77: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso"
 nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
+
+mount_path: "/mnt/nfs-iso/"

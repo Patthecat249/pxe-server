@@ -1,17 +1,44 @@
-- name: "--- 01 - Start Playbook create virtual machine"
+- name: "### --- 01 - Start Playbook create virtual machine --- ###"
   hosts: pxe
   vars_files: 
     - "central_vars.yaml"
+  gather_facts: no
+  vars_prompt:
+# Frage den Hostnamen ab und speichere ihn in einer Variable (max 14 Zeichen, kein FQDN, nur Hostname)
+    - name: hostname
+      prompt: "Wie ist der Hostname? (14 Zeichen, kein FQDN, nur Hostname): "
+      private: no
+# Frage das OS ab (centos76, centos77, centos78, rhel81,...)
+    - name: os
+      prompt: "Welches Betriebssystem? (centos76, centos77, centos78, rhel81): "
+      private: no
+      
+# Beginn TASKs
   tasks:
-  - name: "--- 01 - "
-    copy:
-      src: ""
-      dest: ""
 
-
-# Frage den Hostnamen ab und specichere ihn in einer Variable
+# Erstelle Arbeitsverzeichnisse
+  - name: "--- 01 - Create Working Directories"
+    file:
+      path: "{{ item }}"
+      #owner: root
+      #group: root
+      #mode: '0755'
+      state: directory
+      recurse: true
+    with_items:
+      - "{{ mount_path }}"
 
 # Mounte NFS-Server-Verzeichnis zum Kopieren der Kickstart-Datei
+  - name: "--- 02 - Mounting NFS-Share"
+    mount:
+      fstype: nfs
+      opts: "nfsvers=3,nolock"
+      dump: "0"
+      passno: "0"
+      state: mounted
+      src: "{{ nfs_server_name }}:{{ nfs_path }}"
+      path: "{{ mount_path }}"
+
 
 # Default kickstart jinja-Template erstellen 
 
