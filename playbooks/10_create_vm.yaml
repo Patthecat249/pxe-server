@@ -1,0 +1,20 @@
+- name: "--- 01 - Start Playbook create virtual machine"
+  hosts: pxe
+  vars_files: 
+    - "central_vars.yaml"
+  tasks:
+  - name: "--- 01 - "
+    copy:
+      src: ""
+      dest: ""
+
+
+# Frage den Hostnamen ab und specichere ihn in einer Variable
+
+# Mounte NFS-Server-Verzeichnis zum Kopieren der Kickstart-Datei
+
+# Default kickstart jinja-Template erstellen 
+
+# kopiere jinja-Template auf NFS-Server und setze Berechtigungen, sowie Owner richtig
+
+#  - name: "--- 
