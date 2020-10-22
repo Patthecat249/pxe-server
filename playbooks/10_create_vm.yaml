@@ -56,7 +56,7 @@
       path: "{{ mount_path }}"
 
 
-# Default kickstart jinja-Template erstellen 
+# pxelinux.cfg > default jinja-Template erstellen 
   - name: "--- 04 - Create default.cfg from jinja-Template"
     template:
       src: "{{ jinja_template_folder }}{{ jinja_template_default }}"
@@ -89,3 +89,13 @@
       files:
       - isolinux/vmlinuz
       - isolinux/initrd.img
+
+# Default kickstart jinja-Template erstellen 
+  - name: "--- 08 - Create default.cfg from jinja-Template"
+    template:
+      src: "{{ jinja_template_folder }}{{ jinja_template_default_kickstart_cfg }}"
+      dest: "{{ mount_path }}kickstart-configs/default-ansible.cfg"
+      mode: "0744"
+      owner: "1027"
+      group: "users"
+
