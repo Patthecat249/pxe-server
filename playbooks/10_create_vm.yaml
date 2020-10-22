@@ -27,6 +27,7 @@
       recurse: true
     with_items:
       - "{{ mount_path }}"
+      - "{{ mount_path_cdrom }}"
 
   - name: "--- 02 - Create Working Directories - TFTPROOT"
     file:
@@ -64,6 +65,19 @@
       owner: "{{ dnsmasq_user }}"
       group: "{{ dnsmasq_group }}"
 
-# kopiere jinja-Template auf NFS-Server und setze Berechtigungen, sowie Owner richtig
-
 #  - name: "--- 
+  - name: "--- 05 - Mount ISO-File {{ nfs_path_os_centos76 }}"
+    shell: "mount -o loop {{ mount_path }}{{ nfs_path_os_centos76 }} {{ mount_path_cdrom }}"
+
+# Kopiere den VMLINUZ-Kernel von CentOS76 nach kernel_initrd auf PXE-Server
+  - name: "--- 06 - Kopiere VMLINUZ-Kernel nach TFTP-ROOT"
+    copy:
+      src: "{{ mount_path_cdrom }}isolinux/vmlinuz"
+      dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
+
+# Kopiere den INITRamDisk von CentOS76 nach kernel_initrd auf PXE-Server
+  - name: "--- 07 - Kopiere VMLINUZ-Kernel nach TFTP-ROOT"
+    copy:
+      src: "{{ mount_path_cdrom }}isolinux/initrd.img"
+      dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
+     
