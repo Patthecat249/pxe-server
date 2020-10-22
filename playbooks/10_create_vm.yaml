@@ -94,8 +94,9 @@
   - name: "--- 08 - Create default.cfg from jinja-Template"
     template:
       src: "{{ jinja_template_folder }}{{ jinja_template_default_kickstart_cfg }}"
-      dest: "{{ mount_path }}kickstart-configs/default-ansible.cfg"
+      dest: "{{ mount_path }}kickstart-configs/{{ hostname }}.cfg"
       mode: "0744"
       owner: "1027"
       group: "users"
+      force: yes
 

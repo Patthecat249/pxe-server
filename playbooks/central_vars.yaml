@@ -2,6 +2,7 @@
 dnsmasq_user: "dnsmasq"
 dnsmasq_group: "wheel"
 dns_server_ip: "10.0.249.53"
+domain: "home.local"
 
 # VM-Config
 #hostname: "default.home.local"
