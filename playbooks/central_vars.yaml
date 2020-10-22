@@ -8,3 +8,11 @@ nfs_path_os_centos77: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso"
 nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
 
 mount_path: "/mnt/nfs-iso/"
+
+tftproot_path: "/tftproot/"
+
+# kernel_initrd_fullpath: "kernels_initrd/centos_7.7.1908/vmlinuz"
+kernel_initrd_path: "kernels_initrd/"
+os_name_centos76: "centos76"
+os_name_centos77: "centos77"
+os_name_centos78: "centos78"
