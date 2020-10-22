@@ -1,0 +1,21 @@
+default menu.c32
+prompt 0
+timeout 300
+ONTIMEOUT local
+
+menu title ########## PXE Boot Menu ##########
+
+label 1
+menu label ^1) Install {{ os_name_centos76 }}
+kernel {{ kernel_initrd_path }}{{ os_name_centos76 }}/vmlinuz
+append ip=dhcp initrd={{ kernel_initrd_path }}{{ os_name_centos76 }}/initrd.img inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_centos76}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_kickstart_configs}}/{{kickstart_config_file}}
+
+label 2
+menu label ^2) Install {{ os_name_centos77 }}
+kernel {{ kernel_initrd_path }}{{ os_name_centos77 }}/vmlinuz
+append ip=dhcp initrd={{ kernel_initrd_path }}{{ os_name_centos77 }}/initrd.img inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_centos77}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_kickstart_configs}}/{{kickstart_config_file}}
+
+label 3
+menu label ^3) Install {{ os_name_centos78 }}
+kernel {{ kernel_initrd_path }}{{ os_name_centos78 }}/vmlinuz
+append ip=dhcp initrd={{ kernel_initrd_path }}{{ os_name_centos78 }}/initrd.img inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_centos78}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_kickstart_configs}}/{{kickstart_config_file}}

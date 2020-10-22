@@ -1,18 +1,37 @@
+# DNSMASQ
+dnsmasq_user: "dnsmasq"
+dnsmasq_group: "wheel"
+
+# VM-Config
 hostname: "default.home.local"
-os:
+
+# NFS-Server-/Path-Konfiguration
 nfs_server_name: "nas.home.local"
 nfs_server_ip: "10.0.249.150"
 nfs_path: "/volume1/nfs-iso/"
+nfs_path_kickstart_configs: "kickstart-configs/"
 nfs_path_os_centos76: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1810.iso"
 nfs_path_os_centos77: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso"
 nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
 
+# NFS-Mount-Path on PXE-Server
 mount_path: "/mnt/nfs-iso/"
 
+# Jinja-Template-Folder
+jinja_template_folder: "./config_files/menu_c32/"
+jinja_template_default: "default_jinja.j2"
+
+# TFTP-Root-Folder
 tftproot_path: "/tftproot/"
+
+# Kickstart-Config-Files
+kickstart_config_file: "default.cfg"
 
 # kernel_initrd_fullpath: "kernels_initrd/centos_7.7.1908/vmlinuz"
 kernel_initrd_path: "kernels_initrd/"
 os_name_centos76: "centos76"
 os_name_centos77: "centos77"
 os_name_centos78: "centos78"
+
+# PXELINUX.cfg-config-folder
+pxelinux_cfg_path: "pxelinux.cfg/"

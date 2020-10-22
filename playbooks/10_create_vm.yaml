@@ -17,7 +17,7 @@
   tasks:
 
 # Erstelle Arbeitsverzeichnisse
-  - name: "--- 01 - Create Working Directories"
+  - name: "--- 01 - Create Working Directories /MNT/NFS-ISO"
     file:
       path: "{{ item }}"
       #owner: root
@@ -28,8 +28,23 @@
     with_items:
       - "{{ mount_path }}"
 
+  - name: "--- 02 - Create Working Directories - TFTPROOT"
+    file:
+      path: "{{ item }}"
+      owner: "{{ dnsmasq_user }}"
+      group: "{{ dnsmasq_group }}"
+      mode: '0755'
+      state: directory
+      recurse: true
+    with_items:
+      - "{{ tftproot_path }}{{ kernel_initrd_path }}"
+      - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
+      - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos77 }}"
+      - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos78 }}"
+
+
 # Mounte NFS-Server-Verzeichnis zum Kopieren der Kickstart-Datei
-  - name: "--- 02 - Mounting NFS-Share"
+  - name: "--- 03 - Mounting NFS-Share"
     mount:
       fstype: nfs
       opts: "nfsvers=3,nolock"
@@ -41,6 +56,13 @@
 
 
 # Default kickstart jinja-Template erstellen 
+  - name: "--- 04 - Create default.cfg from jinja-Template"
+    template:
+      src: "{{ jinja_template_folder }}{{ jinja_template_default }}"
+      dest: "{{ tftproot_path }}{{ pxelinux_cfg_path }}default_ansible"
+      mode: "0755"
+      owner: "{{ dnsmasq_user }}"
+      group: "{{ dnsmasq_group }}"
 
 # kopiere jinja-Template auf NFS-Server und setze Berechtigungen, sowie Owner richtig
 
