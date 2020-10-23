@@ -25,8 +25,6 @@ nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
 mount_path: "/mnt/nfs-iso/"
 mount_path_cdrom: "/mnt/cdrom/"
 
-/root/git/pxe-server/playbooks/./config_files/terraform/main.tf.j2
-
 # Jinja-Template-Folder
 jinja_template_folder: "./config_files/menu_c32/"
 jinja_template_default: "default_jinja.j2"
