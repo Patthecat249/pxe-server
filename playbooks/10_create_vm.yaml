@@ -29,7 +29,7 @@
       - "{{ mount_path }}"
       - "{{ mount_path_cdrom }}"
       - "{{ dir_work }}"
-      - "{{ dir_terraform }}"
+      - "{{ dir_work }}{{ dir_terraform }}"
 
   - name: "--- 02 - Create Working Directories - TFTPROOT"
     file:
