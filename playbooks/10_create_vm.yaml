@@ -106,7 +106,7 @@
   - name: "--- 09 - Terraform - Create main.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_main_tf }}"
-      dest: "{{ dir_work }}{{ dir_terraform }}/main.tf"
+      dest: "{{ dir_work }}{{ dir_terraform }}main.tf"
       mode: "0644"
       owner: "root"
       group: "root"
@@ -116,7 +116,7 @@
   - name: "--- 09 - Terraform - Create variables.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_variables_tf }}"
-      dest: "{{ dir_work }}{{ dir_terraform }}/variables.tf"
+      dest: "{{ dir_work }}{{ dir_terraform }}variables.tf"
       mode: "0644"
       owner: "root"
       group: "root"
