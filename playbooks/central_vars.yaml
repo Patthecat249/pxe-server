@@ -4,6 +4,11 @@ dnsmasq_group: "wheel"
 dns_server_ip: "10.0.249.53"
 domain: "home.local"
 
+# Working Directories
+dir_work: "/opt/sva/"
+dir_terraform: "terraform/"
+
+
 # VM-Config
 #hostname: "default.home.local"
 
@@ -24,6 +29,9 @@ mount_path_cdrom: "/mnt/cdrom/"
 jinja_template_folder: "./config_files/menu_c32/"
 jinja_template_default: "default_jinja.j2"
 jinja_template_default_kickstart_cfg: "default_kickstart_cfg.j2"
+dir_template_terraform: "./config_files/terraform/"
+template_terraform_main_tf: "main.tf.j2"
+template_terraform_variables_tf: "variables.tf.j2"
 
 # TFTP-Root-Folder
 tftproot_path: "/tftproot/"
@@ -33,6 +41,18 @@ kickstart_config_file: "default.cfg"
 
 # kernel_initrd_fullpath: "kernels_initrd/centos_7.7.1908/vmlinuz"
 kernel_initrd_path: "kernels_initrd/"
+
+os:
+  - name: "centos7"
+    centos76: "centos76"
+    centos77: "centos77"
+    centos78: "centos78"
+    guest_id: "centos7_64Guest"
+  - name: "centos8"
+    centos81: "centos81"
+    centos82: "centos82"
+    guest_id: "centos8_64Guest"
+
 os_name_centos76: "centos76"
 os_name_centos77: "centos77"
 os_name_centos78: "centos78"
