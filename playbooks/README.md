@@ -19,13 +19,13 @@ git clone https://github.com/Patthecat249/pxe-server.git
 
 # VM erstellen
 # Beispiele:
-# VM erstellen: interaktiv (nur Hostname nach Aufforderung) vergeben
+# 1.) VM erstellen: interaktiv (nur Hostname nach Aufforderung) vergeben
 cd $mypath/git/pxe-server/playbooks && ansible-playbook 11_create_vm_from_clone.yaml
 
-# VM erstellen: "Hostname" festlegen
+# 2.) VM erstellen: "Hostname" festlegen
 cd $mypath/git/pxe-server/playbooks && ansible-playbook 11_create_vm_from_clone.yaml -e "hostname=patrick01"
 
-# VM erstellen: Hostname, CPU & RAM festlegen
+# 3.) VM erstellen: Hostname, CPU & RAM festlegen
 cd $mypath/git/pxe-server/playbooks && ansible-playbook 11_create_vm_from_clone.yaml -e "hostname=patrick01 cpu=4 ram=8192"
 ```
 
