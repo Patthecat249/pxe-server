@@ -3,6 +3,8 @@ dnsmasq_user: "dnsmasq"
 dnsmasq_group: "wheel"
 dns_server_ip: "10.0.249.53"
 domain: "home.local"
+cpu: "2"
+ram: "4096"
 
 # Working Directories
 dir_work: "/opt/sva/"

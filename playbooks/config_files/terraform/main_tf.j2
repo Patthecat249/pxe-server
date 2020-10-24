@@ -36,16 +36,16 @@ variable "ocp-folder" {
 }
 
 # --- Create VM OCP-Bastion-Host --- #
-resource "vsphere_virtual_machine" "test-clone" {
+resource "vsphere_virtual_machine" "{{ hostname }}" {
 
-  name = var.vm_name_clone_test_sva
+  name = var.vm_name
   folder = var.ocp-folder
   guest_id = var.master_guest_id_tag
   resource_pool_id = data.vsphere_resource_pool.pool.id
   firmware = "bios"
   datastore_id = data.vsphere_datastore.datastore.id
-  num_cpus = 2
-  memory = 4096
+  num_cpus = "{{ cpu }}"
+  memory = "{{ ram }}"
   wait_for_guest_ip_timeout = 0
   wait_for_guest_net_timeout = 0
   network_interface {
@@ -61,8 +61,8 @@ resource "vsphere_virtual_machine" "test-clone" {
     template_uuid = "4226b890-4986-d6b5-f3ef-e3458f22cfee"
     customize {
       linux_options {
-        host_name = "cloned"
-        domain = "home.local"
+        host_name = "{{ hostname }}"
+        domain = "{{ domain }}"
       }
       network_interface { }
     }
