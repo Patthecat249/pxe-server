@@ -1,0 +1,47 @@
+- name: "### --- 01 - Start Playbook create virtual machine --- ###"
+  hosts: pxe
+  vars_files: 
+    - "central_vars.yaml"
+  gather_facts: no
+  vars_prompt:
+# Frage den Hostnamen ab und speichere ihn in einer Variable (max 14 Zeichen, kein FQDN, nur Hostname)
+    - name: hostname
+      prompt: "Wie ist der Hostname? (14 Zeichen, kein FQDN, nur Hostname): "
+      private: no
+      
+# Beginn TASKs
+  tasks:
+
+# Erstelle Arbeitsverzeichnisse
+  - name: "--- 01 - Create Working Directories"
+    file:
+      path: "{{ item }}"
+      #owner: root
+      #group: root
+      #mode: '0755'
+      state: directory
+      recurse: true
+    with_items:
+      - "{{ dir_work }}"
+      - "{{ dir_work }}{{ dir_terraform }}"
+      - "{{ dir_work }}{{ dir_terraform }}{{ hostname }}"
+
+# Terraform - Create main.tf from template
+  - name: "--- 09 - Terraform - Create main.tf from jinja-template"
+    template:
+      src: "{{ dir_template_terraform }}{{ template_terraform_main_tf }}"
+      dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/main.tf"
+      mode: "0644"
+      owner: "root"
+      group: "root"
+      force: yes
+
+# Terraform - Create variables.tf from template
+  - name: "--- 09 - Terraform - Create variables.tf from jinja-template"
+    template:
+      src: "{{ dir_template_terraform }}{{ template_terraform_variables_tf }}"
+      dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/variables.tf"
+      mode: "0644"
+      owner: "root"
+      group: "root"
+      force: yes
