@@ -47,5 +47,5 @@
       force: yes
 
 # Terraform apply
-  - name: "--- 04 - Execute terraform apply"
-    shell: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && terraform init && terraform plan"
+  - name: "--- 04 - Execute terraform init > plan > apply"
+    shell: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && terraform init && terraform plan && terraform apply"
