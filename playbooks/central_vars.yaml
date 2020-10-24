@@ -11,6 +11,7 @@ dir_terraform: "terraform/"
 
 # VM-Config
 #hostname: "default.home.local"
+os_type: "centos7_64Guest"
 
 # NFS-Server-/Path-Konfiguration
 nfs_server_name: "nas.home.local"

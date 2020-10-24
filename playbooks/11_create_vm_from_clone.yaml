@@ -27,7 +27,7 @@
       - "{{ dir_work }}{{ dir_terraform }}{{ hostname }}"
 
 # Terraform - Create main.tf from template
-  - name: "--- 09 - Terraform - Create main.tf from jinja-template"
+  - name: "--- 02 - Terraform - Create main.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_main_tf }}"
       dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/main.tf"
@@ -37,7 +37,7 @@
       force: yes
 
 # Terraform - Create variables.tf from template
-  - name: "--- 09 - Terraform - Create variables.tf from jinja-template"
+  - name: "--- 03 - Terraform - Create variables.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_variables_tf }}"
       dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/variables.tf"
