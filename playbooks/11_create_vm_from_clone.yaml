@@ -48,4 +48,4 @@
 
 # Terraform apply
   - name: "--- 04 - Execute terraform init > plan > apply"
-    shell: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && terraform init && terraform plan && terraform apply"
+    shell: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && terraform init && terraform plan && terraform apply -auto-approve"
