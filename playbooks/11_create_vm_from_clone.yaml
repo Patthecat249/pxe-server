@@ -1,5 +1,5 @@
 - name: "### --- 01 - Start Playbook create virtual machine --- ###"
-  hosts: pxe
+  hosts: 127.0.0.1
   vars_files: 
     - "central_vars.yaml"
   gather_facts: no
