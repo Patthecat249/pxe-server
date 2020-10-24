@@ -15,6 +15,15 @@ dir_terraform: "terraform/"
 #hostname: "default.home.local"
 os_type: "centos7_64Guest"
 
+# VM-OS-types
+#  default = "centos7_64Guest"
+#  default = "centos8_64Guest"
+#  default = "rhel7_64Guest"
+#  default = "rhel8_64Guest"
+#  default = "ubuntuGuest"
+#  default = "ubuntu64Guest"
+#  default = "coreos64Guest"
+
 # NFS-Server-/Path-Konfiguration
 nfs_server_name: "nas.home.local"
 nfs_server_ip: "10.0.249.150"
