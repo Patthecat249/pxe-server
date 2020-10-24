@@ -40,7 +40,7 @@ resource "vsphere_virtual_machine" "{{ hostname }}" {
 
   name = var.vm_name
   folder = var.ocp-folder
-  guest_id = var.master_guest_id_tag
+  guest_id = var.guest_id_tag
   resource_pool_id = data.vsphere_resource_pool.pool.id
   firmware = "bios"
   datastore_id = data.vsphere_datastore.datastore.id
