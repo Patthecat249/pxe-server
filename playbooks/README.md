@@ -4,6 +4,20 @@
 
 Diese Automatisierung kann in der Testumgebung zu Hause dazu verwendet werden, um innerhalb kurzer Zeit eine schnelle Test-VM zu erstellen. Dazu müssen die folgenden Befehle ausgeführt werden.
 
+
+
+## Zugriff
+
+Nachdem die VM mit dem unten angegeben Ansible-Script erstellt wurde, kann auf diese durch den verwendeten Hostnamen zugegriffen werden.
+
+**Zum Beispiel:**
+
+ssh **patrick01**.home.local
+
+- User: `root`
+
+- Pass: `Test1234`
+
 ## Schnell eine virtuelle Maschine zu Hause bereitstellen (ca. 3 Minuten)
 
 ```bash
@@ -78,3 +92,16 @@ cd $mypath/git/pxe-server/playbooks && ansible-playbook 11_create_vm_from_clone.
 ### Betriebssystem / VM-Template
 
 Als **Betriebssystem** ist `CentOS 7.6` installiert. Die virtuelle VM wird aus einen VMware-Template `default-template` erzeugt, welches bereits im **Ordner** `Spielwiese` abgelegt ist. Im Terraform-Template ist die **UUID** `4226b890-4986-d6b5-f3ef-e3458f22cfee` des VM-Templates hart codiert.  
+
+
+
+### VM löschen
+
+Um die virtuelle Maschine wieder zu löschen, kann dies mit dem folgenden Ansible-Befehl durchgeführt werden.
+
+**Hinweis: ** *Bitte im Pfad den Hostnamen, der virtuellen Maschine verwenden!*
+
+```bash
+cd /opt/sva/terraform/patrick02/ && terraform destroy -auto-approve
+```
+
