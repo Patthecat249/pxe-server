@@ -9,9 +9,9 @@
       prompt: "Wie ist der Hostname? (14 Zeichen, kein FQDN, nur Hostname): "
       private: no
 # Frage das OS ab (centos76, centos77, centos78, rhel81,...)
-    - name: os
-      prompt: "Welches Betriebssystem? (centos76, centos77, centos78, rhel81): "
-      private: no
+    # - name: os
+    #   prompt: "Welches Betriebssystem? (centos76, centos77, centos78, rhel81): "
+    #   private: no
       
 # Beginn TASKs
   tasks:
