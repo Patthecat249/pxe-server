@@ -54,7 +54,7 @@ resource "vsphere_virtual_machine" "{{ hostname }}" {
   }
   disk {
     label = "rootvolume"
-    size  = "120"
+    size  = "{{ disk }}"
     thin_provisioned  = "true"
   }
   clone {
