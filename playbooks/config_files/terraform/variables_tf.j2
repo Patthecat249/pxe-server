@@ -1,14 +1,14 @@
 # vcenter-connection
 variable "vsphere_server" {
-  default = "vcenter.home.local"
+  default = "{{vsphere_server}}"
 }
 
 variable "vsphere_user" {
-  default = "administrator@home.local"
+  default = "{{vsphere_user}}"
 }
 
 variable "vsphere_password" {
-  default = "Test1234!"
+  default = "{{vsphere_pass}}"
 }
 
 # VM-name
@@ -17,7 +17,7 @@ variable "vm_name" {
 }
 
 variable "vm_folder" {
-  default = "spielwiese"
+  default = "{{vsphere_folder_tf}}"
 }
 
 variable "guest_id_tag" {
@@ -32,21 +32,21 @@ variable "guest_id_tag" {
 
 # vcenter-objects
 variable "vsphere_datacenter" {
-  default = "dc-home"
+  default = "{{vsphere_datacenter}}"
 }
 
 variable "vsphere_compute_cluster" {
-  default = "cluster-home"
+  default = "{{vsphere_cluster}}"
 }
 
 variable "vsphere_resource_pool" {
-  default = "rp-home"
+  default = "{{vsphere_rp}}"
 }
 
 variable "vsphere_datastore" {
-  default = "openshift_storage"
+  default = "{{vsphere_datastore}}"
 }
 
 variable "vsphere_network" {
-  default = "dpg-home-prod"
+  default = "{{vsphere_network}}"
 }
