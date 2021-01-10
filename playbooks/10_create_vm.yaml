@@ -17,7 +17,7 @@
   tasks:
 
 # Erstelle Arbeitsverzeichnisse
-  - name: "--- 01 - Create Working Directories"
+  - name: "--- 01a - Create Working Directories on PXE-Server"
     file:
       path: "{{ item }}"
       #owner: root
@@ -28,8 +28,19 @@
     with_items:
       - "{{ mount_path }}"
       - "{{ mount_path_cdrom }}"
-      - "{{ dir_work }}"
+
+  - name: "--- 01b - Create Working Directories on localhost"
+    file:
+      path: "{{ item }}"
+      #owner: root
+      #group: root
+      #mode: '0755'
+      state: directory
+      recurse: true
+    with_items:
       - "{{ dir_work }}{{ dir_terraform }}{{ hostname }}"
+    delegate_to: "127.0.0.1"
+
 
   - name: "--- 02 - Create Working Directories for DNSMASQ"
     file:
@@ -40,7 +51,7 @@
       state: directory
       recurse: true
     with_items:
-      - "{{ tftproot_path }}{{ kernel_initrd_path }}"
+      # - "{{ tftproot_path }}{{ kernel_initrd_path }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos77 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos78 }}"
@@ -103,7 +114,7 @@
 
 
 # Default kickstart jinja-Template erstellen 
-  - name: "--- 09 - Create default.cfg from jinja-Template"
+  - name: "--- 09 - Create default.cfg from jinja-Template, Save on mounted filesystem from NFS-Server"
     template:
       src: "{{ jinja_template_folder }}{{ jinja_template_default_kickstart_cfg }}"
       dest: "{{ mount_path }}kickstart-configs/{{ hostname }}.cfg"
@@ -121,6 +132,8 @@
       owner: "root"
       group: "root"
       force: yes
+    delegate_to: "127.0.0.1"
+
 
 # Terraform - Create variables.tf from template
   - name: "--- 11 - Terraform - Create variables.tf from jinja-template"
@@ -131,3 +144,4 @@
       owner: "root"
       group: "root"
       force: yes
+    delegate_to: "127.0.0.1"
