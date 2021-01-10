@@ -29,7 +29,7 @@
       - "{{ mount_path }}"
       - "{{ mount_path_cdrom }}"
       - "{{ dir_work }}"
-      - "{{ dir_work }}{{ dir_terraform }}"
+      - "{{ dir_work }}{{ dir_terraform }}{{ hostname }}"
 
   - name: "--- 02 - Create Working Directories for DNSMASQ"
     file:
@@ -116,7 +116,7 @@
   - name: "--- 10 - Terraform - Create main.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_main_tf }}"
-      dest: "{{ dir_work }}{{ dir_terraform }}main.tf"
+      dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/main.tf"
       mode: "0644"
       owner: "root"
       group: "root"
@@ -126,7 +126,7 @@
   - name: "--- 11 - Terraform - Create variables.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_variables_tf }}"
-      dest: "{{ dir_work }}{{ dir_terraform }}variables.tf"
+      dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/variables.tf"
       mode: "0644"
       owner: "root"
       group: "root"
