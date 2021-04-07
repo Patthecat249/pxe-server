@@ -24,3 +24,8 @@ label 4
 menu label ^4) Install {{ os_name_rhel77 }}
 kernel {{ kernel_initrd_path }}{{ os_name_rhel77 }}/vmlinuz
 append ip=dhcp initrd={{ kernel_initrd_path }}{{ os_name_rhel77 }}/initrd.img inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_rhel77}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_kickstart_configs}}{{ hostname }}.cfg
+
+label 5
+menu label ^5) Install {{ os_name_centos83 }}
+kernel {{ kernel_initrd_path }}{{ os_name_centos83 }}/vmlinuz
+append ip=dhcp initrd={{ kernel_initrd_path }}{{ os_name_centos83 }}/initrd.img inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_centos83}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_kickstart_configs}}{{ hostname }}.cfg

@@ -10,7 +10,7 @@
       private: no
 # Frage das OS ab (centos76, centos77, centos78, rhel81,...)
     # - name: os
-    #   prompt: "Welches Betriebssystem? (centos76, centos77, centos78, rhel81): "
+    #   prompt: "Welches Betriebssystem? (centos76, centos77, centos78, centos83, rhel81): "
     #   private: no
       
 # Beginn TASKs
@@ -55,6 +55,7 @@
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos77 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos78 }}"
+      - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos83 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rhel77 }}"
 
 
@@ -112,6 +113,15 @@
       - isolinux/vmlinuz
       - isolinux/initrd.img
 
+  - name: "--- 08a - {{ os_name_centos83 }} - Extract kernel and ramdisk from a ISO"
+    iso_extract:
+      image: "{{ mount_path }}{{ nfs_path_os_centos83 }}"
+      dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos83 }}/"
+      files:
+      - isolinux/vmlinuz
+      - isolinux/initrd.img
+
+
 
 # Default kickstart jinja-Template erstellen 
   - name: "--- 09 - Create default.cfg from jinja-Template, Save on mounted filesystem from NFS-Server"
@@ -126,7 +136,7 @@
 # Terraform - Create main.tf from template
   - name: "--- 10 - Terraform - Create main.tf from jinja-template"
     template:
-      src: "{{ dir_template_terraform }}{{ template_terraform_main_tf }}"
+      src: "{{ dir_template_terraform }}{{ template_terraform_main_tf2 }}"
       dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/main.tf"
       mode: "0644"
       owner: "root"
