@@ -18,6 +18,7 @@ vsphere_network: "dpg-home-prod"
 vsphere_folder: "dc-home/vm/openshift"
 vsphere_folder_tf: "spielwiese"
 vsphere_datastore: "openshift_storage"
+vsphere_hardware_version: "13"
 
 # Working Directories
 dir_work: "/opt/sva/"
@@ -45,6 +46,7 @@ nfs_path_kickstart_configs: "kickstart-configs/"
 nfs_path_os_centos76: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1810.iso"
 nfs_path_os_centos77: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso"
 nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
+nfs_path_os_centos83: "downloaded-iso/linux/CentOS-8.3.2011-x86_64-dvd1.iso"
 nfs_path_os_rhel77: "downloaded-iso/linux/rhel-server-7.7-x86_64-dvd.iso"
 
 # NFS-Mount-Path on PXE-Server
@@ -57,6 +59,7 @@ jinja_template_default: "default_jinja.j2"
 jinja_template_default_kickstart_cfg: "default_kickstart_cfg.j2"
 dir_template_terraform: "./config_files/terraform/"
 template_terraform_main_tf: "main_tf.j2"
+template_terraform_main_tf2: "main_tf2.j2"
 template_terraform_variables_tf: "variables_tf.j2"
 
 # TFTP-Root-Folder
@@ -87,6 +90,7 @@ os:
 os_name_centos76: "centos76"
 os_name_centos77: "centos77"
 os_name_centos78: "centos78"
+os_name_centos83: "centos83"
 os_name_rhel77: "rhel77"
 
 # PXELINUX.cfg-config-folder
