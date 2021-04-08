@@ -18,7 +18,7 @@ vsphere_network: "dpg-home-prod"
 vsphere_folder: "dc-home/vm/openshift"
 vsphere_folder_tf: "spielwiese"
 vsphere_datastore: "openshift_storage"
-vsphere_hardware_version: "13"
+vsphere_hardware_version: "14"
 
 # Working Directories
 dir_work: "/opt/sva/"
