@@ -26,7 +26,7 @@ dir_terraform: "terraform/"
 
 # VM-Config
 #hostname: "default.home.local"
-os_type: "centos7_64Guest"
+os_type: "centos8_64Guest"
 
 # VM-OS-types
 #  default = "centos7_64Guest"
