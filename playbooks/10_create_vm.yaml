@@ -124,9 +124,9 @@
 
 
 # Default kickstart jinja-Template erstellen 
-  - name: "--- 09 - Create default.cfg from jinja-Template, Save on mounted filesystem from NFS-Server"
+  - name: "--- 09 - Create Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
     template:
-      src: "{{ jinja_template_folder }}{{ jinja_template_default_kickstart_cfg }}"
+      src: "./config_files/kickstart-files/default-centos83.cfg"
       dest: "{{ mount_path }}kickstart-configs/{{ hostname }}.cfg"
       mode: "0744"
       owner: "1027"
