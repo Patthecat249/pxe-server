@@ -159,3 +159,4 @@
 # Erzeuge die virtuelle Maschine
   - name: "--- 12 Create virtual machine ({{ hostname }}) with terraform"
     raw: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && /usr/local/bin/terraform init && /usr/local/bin/terraform apply -auto-approve"
+    delegate_to: "127.0.0.1"
