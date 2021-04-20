@@ -17,7 +17,7 @@
   tasks:
 
 # Erstelle Arbeitsverzeichnisse
-  - name: "--- 01a - Create Working Directories on PXE-Server"
+  - name: "--- 01 - Create Working Directories on PXE-Server"
     file:
       path: "{{ item }}"
       #owner: root
@@ -29,7 +29,7 @@
       - "{{ mount_path }}"
       - "{{ mount_path_cdrom }}"
 
-  - name: "--- 01b - Create Working Directories on localhost"
+  - name: "--- 02 - Create Working Directories on localhost"
     file:
       path: "{{ item }}"
       #owner: root
@@ -42,7 +42,7 @@
     delegate_to: "127.0.0.1"
 
 
-  - name: "--- 02 - Create Working Directories for DNSMASQ"
+  - name: "--- 03 - Create Working Directories for TFTP"
     file:
       path: "{{ item }}"
       owner: "{{ dnsmasq_user }}"
@@ -51,16 +51,16 @@
       state: directory
       recurse: true
     with_items:
-      # - "{{ tftproot_path }}{{ kernel_initrd_path }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos77 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos78 }}"
+      - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos81 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos83 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rhel77 }}"
 
 
 # Mounte NFS-Server-Verzeichnis zum Kopieren der Kickstart-Datei
-  - name: "--- 03 - Mounting NFS-Share"
+  - name: "--- 04 - Mounting NFS-Share"
     mount:
       fstype: nfs
       opts: "nfsvers=3,nolock"
@@ -72,7 +72,7 @@
 
 
 # pxelinux.cfg > default jinja-Template erstellen 
-  - name: "--- 04 - Create default.cfg from jinja-Template"
+  - name: "--- 05 - Create /pxelinux.cfg/default-file from jinja-Template"
     template:
       src: "{{ jinja_template_folder }}{{ jinja_template_default }}"
       dest: "{{ tftproot_path }}{{ pxelinux_cfg_path }}default"
@@ -81,7 +81,7 @@
       group: "{{ dnsmasq_group }}"
 
 # Extract the vmlinuz-kernels and initramdisks
-  - name: "--- 05 - {{ os_name_centos76 }} - Extract kernel and ramdisk from a ISO"
+  - name: "--- 06 - {{ os_name_centos76 }} - Extract kernel and ramdisk from a ISO"
     iso_extract:
       image: "{{ mount_path }}{{ nfs_path_os_centos76 }}"
       dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}/"
@@ -89,7 +89,7 @@
       - isolinux/vmlinuz
       - isolinux/initrd.img
 
-  - name: "--- 06 - {{ os_name_centos77 }} - Extract kernel and ramdisk from a ISO"
+  - name: "--- 07 - {{ os_name_centos77 }} - Extract kernel and ramdisk from a ISO"
     iso_extract:
       image: "{{ mount_path }}{{ nfs_path_os_centos77 }}"
       dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos77 }}/"
@@ -97,7 +97,7 @@
       - isolinux/vmlinuz
       - isolinux/initrd.img
 
-  - name: "--- 07 - {{ os_name_centos78 }} - Extract kernel and ramdisk from a ISO"
+  - name: "--- 08 - {{ os_name_centos78 }} - Extract kernel and ramdisk from a ISO"
     iso_extract:
       image: "{{ mount_path }}{{ nfs_path_os_centos78 }}"
       dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos78 }}/"
@@ -105,7 +105,7 @@
       - isolinux/vmlinuz
       - isolinux/initrd.img
 
-  - name: "--- 08 - {{ os_name_rhel77 }} - Extract kernel and ramdisk from a ISO"
+  - name: "--- 09 - {{ os_name_rhel77 }} - Extract kernel and ramdisk from a ISO"
     iso_extract:
       image: "{{ mount_path }}{{ nfs_path_os_rhel77 }}"
       dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rhel77 }}/"
@@ -113,7 +113,15 @@
       - isolinux/vmlinuz
       - isolinux/initrd.img
 
-  - name: "--- 08a - {{ os_name_centos83 }} - Extract kernel and ramdisk from a ISO"
+  - name: "--- 10 - {{ os_name_centos81 }} - Extract kernel and ramdisk from a ISO"
+    iso_extract:
+      image: "{{ mount_path }}{{ nfs_path_os_centos81 }}"
+      dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos81 }}/"
+      files:
+      - isolinux/vmlinuz
+      - isolinux/initrd.img
+
+  - name: "--- 11 - {{ os_name_centos83 }} - Extract kernel and ramdisk from a ISO"
     iso_extract:
       image: "{{ mount_path }}{{ nfs_path_os_centos83 }}"
       dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos83 }}/"
@@ -122,11 +130,10 @@
       - isolinux/initrd.img
 
 
-
 # Default kickstart jinja-Template erstellen 
-  - name: "--- 09 - Create Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
+  - name: "--- 12 - Create Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
     template:
-      src: "./config_files/kickstart-files/default-centos83.cfg"
+      src: "./config_files/kickstart-files/default-centos81.cfg"
       dest: "{{ mount_path }}kickstart-configs/{{ hostname }}.cfg"
       mode: "0744"
       owner: "1027"
@@ -134,7 +141,7 @@
       force: yes
 
 # Terraform - Create main.tf from template
-  - name: "--- 10 - Terraform - Create main.tf from jinja-template"
+  - name: "--- 13 - Terraform - Create main.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_main_tf2 }}"
       dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/main.tf"
@@ -146,7 +153,7 @@
 
 
 # Terraform - Create variables.tf from template
-  - name: "--- 11 - Terraform - Create variables.tf from jinja-template"
+  - name: "--- 14 - Terraform - Create variables.tf from jinja-template"
     template:
       src: "{{ dir_template_terraform }}{{ template_terraform_variables_tf }}"
       dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/variables.tf"
@@ -157,6 +164,6 @@
     delegate_to: "127.0.0.1"
 
 # Erzeuge die virtuelle Maschine
-  - name: "--- 12 Create virtual machine ({{ hostname }}) with terraform"
+  - name: "--- 15 Create virtual machine ({{ hostname }}) with terraform"
     raw: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && /usr/local/bin/terraform init && /usr/local/bin/terraform apply -auto-approve"
     delegate_to: "127.0.0.1"
