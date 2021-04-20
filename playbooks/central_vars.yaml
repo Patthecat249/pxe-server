@@ -46,6 +46,7 @@ nfs_path_kickstart_configs: "kickstart-configs/"
 nfs_path_os_centos76: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1810.iso"
 nfs_path_os_centos77: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso"
 nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
+nfs_path_os_centos81: "downloaded-iso/linux/CentOS-8.1.1911-x86_64-dvd1.iso"
 nfs_path_os_centos83: "downloaded-iso/linux/CentOS-8.3.2011-x86_64-dvd1.iso"
 nfs_path_os_rhel77: "downloaded-iso/linux/rhel-server-7.7-x86_64-dvd.iso"
 
@@ -90,6 +91,7 @@ os:
 os_name_centos76: "centos76"
 os_name_centos77: "centos77"
 os_name_centos78: "centos78"
+os_name_centos81: "centos81"
 os_name_centos83: "centos83"
 os_name_rhel77: "rhel77"
 
