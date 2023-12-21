@@ -1,0 +1,10 @@
+# This is the main playbook, which loads all sub-plays with all the tasks and executes them step by step
+
+- hosts: 127.0.0.1
+  gather_facts: false
+  become: yes
+  tasks:
+# Install all the prerequisites on the remote PXE-Server. We need some Services which.
+    - name: Create a pxe-user on local-machine to use for installation
+      ansible.builtin.import_role:
+        name: 01_create_new_user_on_local_machine

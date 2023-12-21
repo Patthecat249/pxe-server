@@ -1,26 +1,21 @@
 ---
 # tasks file for create_user_and_copy_ssh_keys_on_remote_machine
-- hosts: spielwiese01
-  vars:
-    pxe_user_password: $6$mysecretsalt$YeVMnERBAj7DjEXEZqKPfRwiz07vl6FTEycF/Xu4hEJqeovZ.lpkjX4ROmXhSQvQF/NvCbzBO8i3SWqxoY27H/
-  gather_facts: no
-  remote_user: root
-  become: true
-  tasks:
-  - name: Add a new user named pxe_user
-    user:
-      name: pxe_user
-      shell: /bin/bash
-      password: "{{ pxe_user_password }}"
-  - name: Add pxe_user user to the sudoers
-    copy:
-      dest: "/etc/sudoers.d/pxe_user"
-      content: "pxe_user  ALL=(ALL)  NOPASSWD: ALL"
-  - name: Deploy SSH Key
-    authorized_key:
-      user: pxe_user
-      key: "{{ lookup('file', '/home/pxe_user/.ssh/id_rsa.pub') }}"
-      state: present
+
+# Create an SSH-Folder and Key for pxe-user on localhost
+- name: Add a new user named pxe_user
+  user:
+    name: pxe_user
+    shell: /bin/bash
+    password: "{{ pxe_user_password }}"
+- name: Add pxe_user user to the sudoers
+  copy:
+    dest: "/etc/sudoers.d/pxe_user"
+    content: "pxe_user  ALL=(ALL)  NOPASSWD: ALL"
+- name: Deploy SSH Key
+  authorized_key:
+    user: pxe_user
+    key: "{{ lookup('file', '/home/pxe_user/.ssh/id_rsa.pub') }}"
+    state: present
 #- name: Disable Password Authentication
 #     lineinfile:
 #           dest=/etc/ssh/sshd_config
@@ -35,10 +30,10 @@
 #           line="PermitRootLogin no"
 #           state=present
 #           backup=yes
-    notify:
-      - restart ssh
-  handlers:
-    - name: restart ssh
-      service:
-        name=sshd
-        state=restarted
+#   notify:
+#     - restart ssh
+# handlers:
+#   - name: restart ssh
+#     service:
+#       name=sshd
+#       state=restarted

@@ -1,2 +1,51 @@
 ---
 # vars file for 02a_modify_dnsmasq_configfile
+# "REGEX-Replace"
+# Feel free to customize this variables
+# This is the File which will be copied to remote hosts, when modified
+dnsmasq_config_file: /root/pxe-server/playbooks/config_files/dnsmasq-config/dnsmasq.conf
+
+# This is the original template DNSMASQ.conf-File, which is prepared with variables
+dnsmasq_config_sample_file: /root/pxe-server/playbooks/config_files/dnsmasq-config/dnsmasq.conf.smp
+
+# This is the network interface-name of the PXE-Remote-Server
+network_interface_name: ens192
+
+# This is the IP-Address, which the PXE-Server will be listening in the future.
+pxe_server_ip_address: 10.0.249.60
+
+# This is the default gateway in your network, the PXE-Server will use
+gateway_ip_address: 10.0.249.1
+
+# This is the first DNS-Server-IP, your PXE-Server will try to resolve unknown names
+# This is important to resolve DNS-Names in the internet
+dns_server_ip_address1: 10.0.249.1
+
+# This is the second DNS-Server-IP
+dns_server_ip_address2: 8.8.8.8
+
+# This is the beginning (first IP) of your DHCP-Range
+dhcp_range_start: 10.0.249.61
+
+# This is the end (last IP) of your DHCP-Range
+dhcp_range_end: 10.0.249.65
+
+# This is the subnet-mask of your network
+subnet_mask: 255.255.255.0
+
+# This is the Network Time Protocol Server (Default 0.0.0.0 means the address of the machine running dnsmasq, the PXE-Server)
+ntp_ip_address: 0.0.0.0
+
+# This is the Default Gateway, yours client get configured
+dhcp_boot_option_3_gateway: 10.0.249.1
+
+# These are the first and second DNS-Server-IPs, which your clients will become, when they boot from PXE-Server and be configured the first time
+dhcp_boot_option_6_dns1: 8.8.8.8
+dhcp_boot_option_6_dns2: 8.8.4.4
+dhcp_boot_option_28_broadcast_address: 10.0.0.255
+dhcp_boot_option_42_ntp: 0.0.0.0
+dhcp_boot_tftp_server_ip: 10.0.249.60
+
+# This is the tftp-root-directory, where the VMLINUX-Kernel, INITRD-Image lie
+tftproot_path: "/tftproot/"
+

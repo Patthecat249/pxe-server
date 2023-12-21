@@ -1,2 +1,9 @@
 ---
 # vars file for 04_configure_firewall
+# Configure Variables, they will be used in section tasks
+zone: public
+ftp: 21/tcp
+dns: 53/udp
+dhcp: 67/udp
+tftp: 69/udp
+proxydhcp: 4011/udp

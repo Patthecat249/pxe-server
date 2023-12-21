@@ -1,19 +1,10 @@
 ---
 # tasks file for 03_start_and_enable_daemons
-- name: Start and Enable all daemons
-  hosts: spielwiese
-  become: yes
 
-  tasks:
-  # Start and Enable DNSMASQ
-  - name: Make sure DNSMASQ service is running
-    service:
-      state: started
-      enabled: yes
-      name: dnsmasq
-  # Start and Enable VSFTPD
-  - name: Make sure VSFTPD service is running
-    service:
-      state: started
-      enabled: yes
-      name: vsftpd
+# Start and Enable DNSMASQ
+- name: Make sure DNSMASQ service is running
+  service:
+    state: started
+    enabled: yes
+    name: dnsmasq
+

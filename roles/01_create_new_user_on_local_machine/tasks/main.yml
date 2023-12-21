@@ -4,5 +4,5 @@
     name: "{{ user }}"
     shell: /bin/bash
     password: "{{ pxe_user_password }}"
-    state: absent
+    state: present
     #remove: true

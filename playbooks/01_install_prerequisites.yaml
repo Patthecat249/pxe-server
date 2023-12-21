@@ -2,7 +2,7 @@
 - name: Install the PREREQUISITES
   hosts: pxe
   become: yes
-
+  gather_facts: false
   tasks:
    - name: Install NET-TOOLS
      yum:

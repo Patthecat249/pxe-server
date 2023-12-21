@@ -1,67 +1,21 @@
+---
+# vars file for pxe-server
+
+# Working Directories
+dir_work: "/opt/sva/"
+dir_terraform: "terraform/"
+
 # DNSMASQ
 dnsmasq_user: "dnsmasq"
 dnsmasq_group: "wheel"
 dns_server_ip: "10.0.249.53"
 domain: "home.local"
 
-# VM-Default-Attributs
-cpu: "2"
-ram: "4096"
-disk: "120"
-vsphere_server: "vcenter.home.local"
-vsphere_user: "administrator@home.local"
-vsphere_pass: "Test1234!"
-vsphere_datacenter: "dc-home"
-vsphere_cluster: "cluster-home"
-vsphere_rp: "rp-home"
-vsphere_network: "pg-home"
-vsphere_folder: "dc-home/vm/openshift"
-vsphere_folder_tf: "spielwiese"
-vsphere_datastore: "esx-datengrab"
-vsphere_hardware_version: "14"
+# PXELINUX.cfg-config-folder
+pxelinux_cfg_path: "pxelinux.cfg/"
 
-# Working Directories
-dir_work: "/opt/sva/"
-dir_terraform: "terraform/"
-
-
-# VM-Config
-#hostname: "default.home.local"
-os_type: "centos8_64Guest"
-
-# VM-OS-types
-#  default = "centos7_64Guest"
-#  default = "centos8_64Guest"
-#  default = "rhel7_64Guest"
-#  default = "rhel8_64Guest"
-#  default = "ubuntuGuest"
-#  default = "ubuntu64Guest"
-#  default = "coreos64Guest"
-
-# NFS-Server-/Path-Konfiguration
-nfs_server_name: "nas.home.local"
-nfs_server_ip: "10.0.249.150"
-nfs_path: "/volume1/nfs-iso/"
-nfs_path_kickstart_configs: "kickstart-configs/"
-nfs_path_os_centos76: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1810.iso"
-nfs_path_os_centos77: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso"
-nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
-nfs_path_os_centos81: "downloaded-iso/linux/CentOS-8.1.1911-x86_64-dvd1.iso"
-nfs_path_os_centos83: "downloaded-iso/linux/CentOS-8.3.2011-x86_64-dvd1.iso"
-nfs_path_os_rhel77: "downloaded-iso/linux/rhel-server-7.7-x86_64-dvd.iso"
-
-# NFS-Mount-Path on PXE-Server
-mount_path: "/mnt/nfs-iso/"
-mount_path_cdrom: "/mnt/cdrom/"
-
-# Jinja-Template-Folder
-jinja_template_folder: "./config_files/menu_c32/"
-jinja_template_default: "default_jinja.j2"
-jinja_template_default_kickstart_cfg: "default_kickstart_cfg.j2"
-dir_template_terraform: "./config_files/terraform/"
-template_terraform_main_tf: "main_tf.j2"
-template_terraform_main_tf2: "main_tf2.j2"
-template_terraform_variables_tf: "variables_tf.j2"
+# grub.cfg-file
+grub_cfg_file: "/tftproot/EFI/BOOT/grub.cfg"
 
 # TFTP-Root-Folder
 tftproot_path: "/tftproot/"
@@ -95,5 +49,63 @@ os_name_centos81: "centos81"
 os_name_centos83: "centos83"
 os_name_rhel77: "rhel77"
 
-# PXELINUX.cfg-config-folder
-pxelinux_cfg_path: "pxelinux.cfg/"
+# VM-Default-Attributs
+cpu: "2"
+ram: "4096"
+disk: "120"
+
+# VM-Config
+#hostname: "default.home.local"
+os_type: "centos8_64Guest"
+
+# VM-OS-types
+#  default = "centos7_64Guest"
+#  default = "centos8_64Guest"
+#  default = "rhel7_64Guest"
+#  default = "rhel8_64Guest"
+#  default = "ubuntuGuest"
+#  default = "ubuntu64Guest"
+#  default = "coreos64Guest"
+
+# vCenter Variables Configuration
+vsphere_server: "vcenter.home.local"
+vsphere_user: "administrator@home.local"
+vsphere_pass: "Test1234!"
+vsphere_datacenter: "dc-home"
+vsphere_cluster: "cluster-home"
+vsphere_rp: "rp-home"
+vsphere_network: "pg-home"
+vsphere_folder: "dc-home/vm/openshift"
+vsphere_folder_tf: "spielwiese"
+vsphere_datastore: "esx-datengrab"
+vsphere_hardware_version: "19"
+
+
+# NFS-Server-/Path-Konfiguration
+nfs_server_name: "nas.home.local"
+nfs_server_ip: "10.0.249.150"
+nfs_path: "/volume1/nfs-iso/"
+nfs_path_kickstart_configs: "kickstart-configs/"
+nfs_path_os_centos76: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1810.iso"
+nfs_path_os_centos77: "downloaded-iso/linux/CentOS-7-x86_64-DVD-1908.iso"
+nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
+nfs_path_os_centos81: "downloaded-iso/linux/CentOS-8.1.1911-x86_64-dvd1.iso"
+nfs_path_os_centos83: "downloaded-iso/linux/CentOS-8.3.2011-x86_64-dvd1.iso"
+nfs_path_os_rhel77: "downloaded-iso/linux/rhel-server-7.7-x86_64-dvd.iso"
+
+# NFS-Mount-Path on PXE-Server
+mount_path: "/mnt/nfs-iso/"
+mount_path_cdrom: "/mnt/cdrom/"
+
+# Jinja-Template-Folder
+jinja_template_folder: "./config_files/menu_c32/"
+jinja_template_default: "default_jinja.j2"
+jinja_template_default_kickstart_cfg: "default_kickstart_cfg.j2"
+dir_template_terraform: "./config_files/terraform/"
+template_terraform_main_tf: "main_tf.j2"
+template_terraform_main_tf2: "main_tf2.j2"
+template_terraform_variables_tf: "variables_tf.j2"
+
+
+
+

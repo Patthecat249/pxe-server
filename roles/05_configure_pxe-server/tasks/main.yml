@@ -1,47 +1,106 @@
 ---
 # tasks file for 01_configure_pxe-server
-- name: Configure the PXE-Server
-  hosts: spielwiese
-  become: yes
+## This task-book creates the tftproot-folder and adds the necessary content to it
 
-  tasks:
-  # Create the TFTP-Boot-Directory
-   - name: CREATE TFTP-BOOT-DIRECTORY
-     file:
-       path: /var/lib/tftpboot/pxelinux.cfg
-       state: directory
-  # Copies the pxelinux.cfg-File, which contains the menu_c32 Menu-File to Default-Folder of the TFTP-Server
-   - name: COPY pxelinux.cfg TO tftp-boot-directory
-     copy:
-       src: ./config_files/menu_c32/default_tftp_menu_c32
-       dest: /var/lib/tftpboot/pxelinux.cfg/default
-       owner: root
-       group: root
-       mode: 0644
-  # Copies all content of the syslinux-files to the tftpboot-directory
-   - name: COPY FILES FROM /usr/share/syslinux TO /var/lib/tftpboot
-     shell: cp -R /usr/share/syslinux/ /var/lib/tftpboot/
-  # Copies the dnsmasq.conf file from local-server to remote-destination
-   - name: COPY dnsmasq.conf TO /etc/dnsmasq.conf
-     copy:
-       src: ./config_files/dnsmasq-config/dnsmasq.conf
-       dest: /etc/dnsmasq.conf
-       owner: root
-       group: root
-       mode: 0644
-       force: yes
-  # Copies the Anaconda-Kickstart-Files to the Public FTP-Folder
-   - name: COPY anaconda-ks.cfg TO /var/ftp/pub/
-     copy: src=./config_files/kickstart-files/anaconda-ks.cfg dest=/var/ftp/pub/
-   - name: COPY clean_minimal_centos761810.cfg TO /var/ftp/pub/
-     copy: src=./config_files/kickstart-files/clean_minimal_centos761810.cfg dest=/var/ftp/pub/
-   - name: COPY docker.cfg TO /var/ftp/pub/
-     copy: src=./config_files/kickstart-files/docker.cfg dest=/var/ftp/pub/
-   - name: COPY ks-centos7.6-unattended.cfg TO /var/ftp/pub/
-     copy: src=./config_files/kickstart-files/ks-centos7.6-unattended.cfg dest=/var/ftp/pub/
-  # Copies the VMLINUX-Kernel-File to the destination under TFTPBOOT/CENTOS7/
-   - name: COPY VMLINUZ-Kernel ./config-files/centos7_initrd_vmlinux TO /var/lib/tftpboot/centos7/
-     copy: src=./config_files/centos7_initrd_vmlinux/vmlinuz dest=/var/lib/tftpboot/centos7/
-  # Copies the INITRD-File to the destination under TFTPBOOT/CENTOS7/
-   - name: COPY INITRD-IMAGE ./config-files/centos7_initrd_vmlinux TO /var/lib/tftpboot/centos7/
-     copy: src=./config_files/centos7_initrd_vmlinux/initrd.img dest=/var/lib/tftpboot/centos7/
+
+# Create the TFTP-Boot-Directory
+- name: "Create TFTP-Working Directories on PXE-Server"
+  file:
+    path: "{{ item }}"
+    #owner: root
+    #group: root
+    #mode: '0755'
+    state: directory
+    recurse: true
+  loop:
+    - "{{ tftproot_path }}"
+    - "{{ grub_cfg_path }}"
+    - "{{ tftproot_path }}{{ kernel_initrd_path }}"
+
+# Add an Example like Rocky-Linux
+- name: Configure grub.cfg
+  template: 
+    src: "templates/grub.cfg.j2"
+    dest: "{{ grub_cfg_path }}grub2.cfg"
+
+- name: Copy some needed files from ISOLinux to tftproot-folder
+  copy:
+    src: "{{ item }}"
+    dest: "{{ tftproot_path }}"
+    remote_src: true
+  loop:
+    - "/usr/share/syslinux/pxelinux.0"
+    - "/usr/share/syslinux/ldlinux.c32"
+    - "/usr/share/syslinux/menu.c32"
+    - "/usr/share/syslinux/libutil.c32"
+
+
+# Configure DNSMASQ-SELINUX-Policies
+- name: Set SELinux boolean tftp_anon_write to true
+  seboolean:
+    name: tftp_anon_write
+    state: true
+    persistent: true
+
+- name: Set SELinux boolean tftp_home_dir to true
+  seboolean:
+    name: tftp_home_dir
+    state: true
+    persistent: true
+
+- name: Add custom SELinux fcontext
+  sefcontext:
+    target: "{{ tftproot_path | regex_replace('/$') }}(/.*)?"
+    setype: tftpdir_t
+    state: present
+
+- name: Restorecon on tftproot_path
+  command: "/usr/sbin/restorecon -Rv {{ tftproot_path }}" 
+
+- name: Start and enable dnsmasq persistent
+  systemd:
+    name: dnsmasq
+    state: started
+    enabled: yes
+
+  
+
+
+# Copies the pxelinux.cfg-File, which contains the menu_c32 Menu-File to Default-Folder of the TFTP-Server
+# - name: COPY pxelinux.cfg TO tftp-boot-directory
+#   copy:
+#     src: ./config_files/menu_c32/default_tftp_menu_c32
+#     dest: /var/lib/tftpboot/pxelinux.cfg/default
+#     owner: root
+#     group: root
+#     mode: 0644
+
+# Copies all content of the syslinux-files to the tftpboot-directory
+# - name: COPY FILES FROM /usr/share/syslinux TO /var/lib/tftpboot
+#   shell: cp -R /usr/share/syslinux/ /var/lib/tftpboot/
+
+# # Copies the dnsmasq.conf file from local-server to remote-destination
+# - name: COPY dnsmasq.conf TO /etc/dnsmasq.conf
+#   copy:
+#     src: ./config_files/dnsmasq-config/dnsmasq.conf
+#     dest: /etc/dnsmasq.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+#     force: yes
+
+# # Copies the Anaconda-Kickstart-Files to the Public FTP-Folder
+# - name: COPY anaconda-ks.cfg TO /var/ftp/pub/
+#   copy: src=./config_files/kickstart-files/anaconda-ks.cfg dest=/var/ftp/pub/
+# - name: COPY clean_minimal_centos761810.cfg TO /var/ftp/pub/
+#   copy: src=./config_files/kickstart-files/clean_minimal_centos761810.cfg dest=/var/ftp/pub/
+# - name: COPY docker.cfg TO /var/ftp/pub/
+#   copy: src=./config_files/kickstart-files/docker.cfg dest=/var/ftp/pub/
+# - name: COPY ks-centos7.6-unattended.cfg TO /var/ftp/pub/
+#   copy: src=./config_files/kickstart-files/ks-centos7.6-unattended.cfg dest=/var/ftp/pub/
+# # Copies the VMLINUX-Kernel-File to the destination under TFTPBOOT/CENTOS7/
+# - name: COPY VMLINUZ-Kernel ./config-files/centos7_initrd_vmlinux TO /var/lib/tftpboot/centos7/
+#   copy: src=./config_files/centos7_initrd_vmlinux/vmlinuz dest=/var/lib/tftpboot/centos7/
+# # Copies the INITRD-File to the destination under TFTPBOOT/CENTOS7/
+# - name: COPY INITRD-IMAGE ./config-files/centos7_initrd_vmlinux TO /var/lib/tftpboot/centos7/
+#   copy: src=./config_files/centos7_initrd_vmlinux/initrd.img dest=/var/lib/tftpboot/centos7/

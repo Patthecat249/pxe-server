@@ -57,6 +57,7 @@
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos81 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos83 }}"
       - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rhel77 }}"
+      - "{{ tftproot_path }}pxelinux.cfg/"
 
 
 # Mounte NFS-Server-Verzeichnis zum Kopieren der Kickstart-Datei

@@ -1,0 +1,33 @@
+# Execute this playbook to bootstrap the whole pxe-server-configuration
+# It does not create a vm! 
+
+- hosts: pxe
+  gather_facts: false
+  become: yes
+  tasks:
+# Install all the prerequisites on the remote PXE-Server. We need some Services which.
+
+    - name: Create a user and copy ssh-keys on remote pxe-server-vm
+      ansible.builtin.import_role:
+        name: 02_create_user_and_copy_ssh_keys_on_remote_machine
+
+    - name: Modify /etc/dnsmasq.conf
+      ansible.builtin.import_role:
+        name: 03_modify_dnsmasq_configfile
+
+    - name: Install some required packages
+      ansible.builtin.import_role:
+        name: 04_install_prerequisites
+
+    - name: Configure PXE-Server
+      ansible.builtin.import_role:
+        name: 05_configure_pxe-server
+
+    - name: Start and enable Daemons
+      ansible.builtin.import_role:
+        name: 06_start_and_enable_daemons
+
+    - name: Configure Firewall
+      ansible.builtin.import_role:
+        name: 07_configure_firewall
+

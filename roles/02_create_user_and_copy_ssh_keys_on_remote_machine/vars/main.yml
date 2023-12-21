@@ -1,2 +1,3 @@
 ---
 # vars file for create_user_and_copy_ssh_keys_on_remote_machine
+pxe_user_password: $6$mysecretsalt$YeVMnERBAj7DjEXEZqKPfRwiz07vl6FTEycF/Xu4hEJqeovZ.lpkjX4ROmXhSQvQF/NvCbzBO8i3SWqxoY27H/

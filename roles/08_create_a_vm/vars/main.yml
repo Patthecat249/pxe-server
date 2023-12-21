@@ -1,3 +1,5 @@
+---
+# vars file for 08_create_a_vm
 # DNSMASQ
 dnsmasq_user: "dnsmasq"
 dnsmasq_group: "wheel"
@@ -49,6 +51,7 @@ nfs_path_os_centos78: "downloaded-iso/linux/CentOS-7-x86_64-DVD-2003.iso"
 nfs_path_os_centos81: "downloaded-iso/linux/CentOS-8.1.1911-x86_64-dvd1.iso"
 nfs_path_os_centos83: "downloaded-iso/linux/CentOS-8.3.2011-x86_64-dvd1.iso"
 nfs_path_os_rhel77: "downloaded-iso/linux/rhel-server-7.7-x86_64-dvd.iso"
+nfs_path_os_rocky89: "downloaded-iso/linux/Rocky-8.9-x86_64-minimal.iso"
 
 # NFS-Mount-Path on PXE-Server
 mount_path: "/mnt/nfs-iso/"
@@ -65,6 +68,10 @@ template_terraform_variables_tf: "variables_tf.j2"
 
 # TFTP-Root-Folder
 tftproot_path: "/tftproot/"
+
+# PXELINUX.cfg-config-folder
+pxelinux_cfg_path: "{{tftproot_path}}pxelinux.cfg/"
+grub_cfg_path: "{{tftproot_path}}EFI/BOOT/"
 
 # Kickstart-Config-Files
 kickstart_config_file: "default.cfg"
@@ -94,6 +101,5 @@ os_name_centos78: "centos78"
 os_name_centos81: "centos81"
 os_name_centos83: "centos83"
 os_name_rhel77: "rhel77"
+os_name_rocky89: "rocky89"
 
-# PXELINUX.cfg-config-folder
-pxelinux_cfg_path: "pxelinux.cfg/"

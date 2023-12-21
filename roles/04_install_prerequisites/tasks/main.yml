@@ -27,4 +27,17 @@
 - name: Install VSFTPD
   yum:
     name: vsftpd.x86_64
+    state: absent
+- name: Install SEManage
+  yum:
+    name: python3-libsemanage
     state: present
+- name: Install SELinux Documentation
+  yum:
+    name: policycoreutils-devel.x86_64
+    state: present
+- name: Install SELinux Troubleshooting-Tools
+  yum:
+    name: setroubleshoot-server.x86_64
+    state: present
+    

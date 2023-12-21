@@ -1,0 +1,26 @@
+set default="1"
+
+function load_video {
+  insmod efi_gop
+  insmod efi_uga
+  insmod video_bochs
+  insmod video_cirrus
+  insmod all_video
+}
+
+load_video
+set gfxpayload=keep
+insmod gzio
+insmod part_gpt
+insmod ext2
+
+set timeout=60
+### END /etc/grub.d/00_header ###
+
+search --no-floppy --set=root -l 'Rocky-8-9-x86_64-dvd'
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Install Rocky Linux 8.9 from NFS - Patrick' --class fedora --class gnu-linux --class gnu --class os {
+        linuxefi /{{kernel_initrd_path}}vmlinuz inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_rocky89}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}kickstart-configs/rocky.cfg quiet
+        initrdefi /{{kernel_initrd_path}}initrd.img
+}

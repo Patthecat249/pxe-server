@@ -1,6 +1,8 @@
 # This is the main playbook, which loads all sub-plays with all the tasks and executes them step by step
 
 - hosts: pxe
+  gather_facts: false
+  become: yes
   #vars:
   #  user: root
   #  pass: Test1234
