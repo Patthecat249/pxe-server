@@ -1,8 +1,11 @@
 # Bootstrapping of a PXE/TFTP-Server
-- Create a vm (Minimal Installation of Rocky Linux, Fedora, CentOS or RHEL). This will be your pxe-server Tested with Rocky Linux 8.7
-- Download the git repo on your bastion-host
+- Create a vm `manually` (Minimal Installation of Rocky Linux 8.9, Fedora, CentOS or RHEL). This will be your pxe-server Tested with Rocky Linux 8.9
+- Download this git repo on your bastion-host
 - Configure the vars-files as it fits your needs
-This contains some ansible-scripts to setup a pxe-server.
+
+1. Execute Playbook `01-playbook-for-local-tasks.yaml` to prepare your local-environment
+2. Execute Playbook `02-playbook-for-remote-tasks-on-pxe-server.yaml` to setup your fresh `last manually installed` pxe-server for automation in the future
+3. Execute Playbook `03-playbook-create-a-vm.yaml` to create a virtual machine in your VMware Environment
 
 
 # General
@@ -24,8 +27,10 @@ dhcp-option=66,pxe-server
 dhcp-boot=pxelinux.0,pxe-server,pxe-server
 
 # For UEFI-Boot Machines
-# if your machines boot with UEFI-BIOS, use the shim-bootloader
+# if your machines boot with UEFI-BIOS and secure-boot enabled, use the shim-bootloader
 dhcp-boot=tag:efi-x86_64,shimx64.efi,pxe-server,pxe-server
+# if your machines boot with UEFI-BIOS and secure-boot disabled, use the grub-bootloader
+dhcp-boot=tag:efi-x86_64,grubx64.efi,pxe-server,pxe-server
 
 # Or enable the option to promt "F8" to offer your vm some options to interactive install the OS
 pxe-prompt="Press F8 for menu.", 5
@@ -37,7 +42,7 @@ pxe-service=x86PC,"Choose and Install OS per TFTP from PXE-SERVER",pxelinux,pxe-
 - an **IPv4**-address for your PXE-Server
 
 ## Install packages
-Your pxe-server needs the following software-packages.
+Your pxe-server needs the following software-packages. This Role will install all needed software prerequisites automatically
 
 - dnsmasq
 - tftp
@@ -46,8 +51,6 @@ Your pxe-server needs the following software-packages.
 ```bash
 yum install -y dnsmasq tftp syslinux
 ```
-
-
 
 ## Central configuration-file *dnsmasq.conf*
 
@@ -61,7 +64,7 @@ The pxe-server configuration is very <u>easy</u> and <u>simple</u>. It contains 
 # /etc/dnsmasq.conf
 interface=ens160,lo
 enable-tftp
-tftp-root=/home/tftproot/rootdir/tftpboot
+tftp-root=/tftproot
 ```
 
 
