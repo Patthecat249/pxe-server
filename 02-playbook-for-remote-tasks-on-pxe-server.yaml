@@ -11,13 +11,16 @@
       ansible.builtin.import_role:
         name: 02_create_user_and_copy_ssh_keys_on_remote_machine
 
-    - name: Modify /etc/dnsmasq.conf
-      ansible.builtin.import_role:
-        name: 03_modify_dnsmasq_configfile
+
 
     - name: Install some required packages
       ansible.builtin.import_role:
         name: 04_install_prerequisites
+
+    - name: Modify /etc/dnsmasq.conf
+      ansible.builtin.import_role:
+        name: 03_modify_dnsmasq_configfile
+
 
     - name: Configure PXE-Server
       ansible.builtin.import_role:
