@@ -1,8 +1,5 @@
 # This dnsmasq.conf is only for the pxe-configuration
 # The dns-configuration must be made from another dns-server like my raspy /etc/dnsmasq.conf
-# The following two lines are neccessary if the pxe-server runs at 10.0.249.60
-# dhcp-host=00:50:56:9c:4f:aa,set:testtag,10.0.249.157,patrick01,infinite
-# dhcp-boot=tag:testtag,grubx64.efi,patrick01,10.0.249.60
 
 interface=ens33,lo
 enable-tftp
