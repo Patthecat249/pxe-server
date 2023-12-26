@@ -3,7 +3,7 @@
 # This is the tftp-root-directory, where the VMLINUX-Kernel, INITRD-Image lie
 tftproot_path: "/tftproot/"
 grub_cfg_path: "{{tftproot_path}}EFI/BOOT/"
-kernel_initrd_path: "kernel_initrd/"
+kernel_initrd_path: "kernels_initrd/"
 
 # NFS-Server-/Path-Konfiguration
 nfs_server_name: "nas.home.local"
