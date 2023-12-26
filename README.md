@@ -27,12 +27,16 @@ dhcp-option=66,pxe-server
 dhcp-boot=pxelinux.0,pxe-server,pxe-server
 
 # For UEFI-Boot Machines
-# if your machines boot with UEFI-BIOS and secure-boot enabled, use the shim-bootloader
-dhcp-boot=tag:efi-x86_64,shimx64.efi,pxe-server,pxe-server
-# if your machines boot with UEFI-BIOS and secure-boot disabled, use the grub-bootloader
-dhcp-boot=tag:efi-x86_64,grubx64.efi,pxe-server,pxe-server
+#**********************************************************************************
+#* The following two options has to be set in the DNSMASQ.conf on your dns-server *
+#**********************************************************************************
+## the dhcp-match options tell the dhcp-client to set a tag named "efi" to clients who come with an EFI-boot
+dhcp-match=set:efi,option:client-arch,7
+## the dhcp-boot option defines that each vm which booted as client-arch=7 and has the tag named efi, it should load the grubx64.efi from the rootfolder of the pxe-server. The grub-bootloader looks then for files under /tftproot/EFI/BOOT/grub.cfg
+dhcp-boot=tag:efi,grubx64.efi,pxe-server,pxe-server
 
 # Or enable the option to promt "F8" to offer your vm some options to interactive install the OS
+# PXE-Prompt is for every VM who boots with the legacy bootloader and NOT EFI. It searches for the pxelinux.0 bootloader und looks for configs under /tftproot/pxelinux.cfg/default
 pxe-prompt="Press F8 for menu.", 5
 pxe-service=x86PC,"Choose and Install OS per TFTP from PXE-SERVER",pxelinux,pxe-server
 ```
