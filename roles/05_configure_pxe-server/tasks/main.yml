@@ -21,7 +21,7 @@
 - name: Configure grub.cfg
   template: 
     src: "templates/grub.cfg.j2"
-    dest: "{{ grub_cfg_path }}grub2.cfg"
+    dest: "{{ grub_cfg_path }}grub.cfg"
 
 - name: Copy some needed files from ISOLinux to tftproot-folder
   copy:
@@ -34,6 +34,24 @@
     - "/usr/share/syslinux/menu.c32"
     - "/usr/share/syslinux/libutil.c32"
 
+# Mounte NFS-Server-Verzeichnis zum Kopieren des Grub-Bootloaders
+- name: "--- 04 - Mounting NFS-Share"
+  mount:
+    fstype: nfs
+    opts: "nfsvers=3,nolock"
+    dump: "0"
+    passno: "0"
+    state: mounted
+    src: "{{ nfs_server_name }}:{{ nfs_path }}"
+    path: "{{ mount_path }}"
+
+# Extract grubx64.efi
+- name: "{{ os_name_rocky89 }} - Extract grubx64.efi"
+  iso_extract:
+    image: "{{ mount_path }}{{ nfs_path_os_rocky89 }}"
+    dest: "{{ tftproot_path }}"
+    files:
+    - EFI/BOOT/grubx64.efi
 
 # Configure DNSMASQ-SELINUX-Policies
 - name: Set SELinux boolean tftp_anon_write to true

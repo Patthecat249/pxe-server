@@ -123,6 +123,15 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
+# Extract grubx64.efi
+- name: "--- 11b - {{ os_name_rocky89 }} - Extract grubx64.efi"
+  iso_extract:
+    image: "{{ mount_path }}{{ nfs_path_os_rocky89 }}"
+    dest: "{{ tftproot_path }}"
+    files:
+    - EFI/BOOT/grubx64.efi
+
+
 # Default kickstart jinja-Template erstellen 
 - name: "--- 12 - Create Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
   template:
