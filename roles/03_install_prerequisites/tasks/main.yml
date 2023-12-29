@@ -1,47 +1,18 @@
 --- 
 # tasks file for 04_install_prerequisites
-- name: Install NET-TOOLS
-  yum:
-    name: net-tools.x86_64
+- name: "Install net-tools, wget, nfs-utils, dnsmasq, tftp, pykickstart, selinux-tools and docs" 
+  ansible.builtin.yum:
+    name: 
+      - net-tools.x86_64
+      - wget.x86_64
+      - nfs-utils.x86_64
+      - dnsmasq.x86_64
+      - syslinux.x86_64
+      - tftp-server.x86_64
+      - pykickstart.noarch
+      - python3-libsemanage
+      - policycoreutils-devel.x86_64
+      - setroubleshoot-server.x86_64
     state: present
-- name: Install WGET
-  yum:
-    name: wget.x86_64
-    state: present
-- name: Install NFS-Utils
-  yum:
-    name: nfs-utils.x86_64
-    state: present
-- name: Install DNSMASQ
-  yum:
-    name: dnsmasq.x86_64
-    state: present
-- name: Install SYSLINUX
-  yum:
-    name: syslinux.x86_64
-    state: present
-- name: Install TFTP-Server
-  yum:
-    name: tftp-server.x86_64
-    state: present
-- name: Install PYKICKSTART
-  yum:
-    name: pykickstart.noarch
-    state: present
-- name: Install VSFTPD
-  yum:
-    name: vsftpd.x86_64
-    state: absent
-- name: Install SEManage
-  yum:
-    name: python3-libsemanage
-    state: present
-- name: Install SELinux Documentation
-  yum:
-    name: policycoreutils-devel.x86_64
-    state: present
-- name: Install SELinux Troubleshooting-Tools
-  yum:
-    name: setroubleshoot-server.x86_64
-    state: present
+
     
