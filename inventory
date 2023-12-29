@@ -1,5 +1,5 @@
 [pxe]
 pxe-server
 
-[fedora]
-10.0.249.155
+#[fedora]
+#10.0.249.155
