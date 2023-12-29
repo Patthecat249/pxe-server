@@ -1,2 +1,87 @@
 ---
 # tasks file for 09_create_coreos_with_butane
+# Create some working directories
+# - name: "Create Butane-Working Directories"
+#   file:
+#     path: "{{ item }}"
+#     #owner: root
+#     #group: root
+#     #mode: '0755'
+#     state: directory
+#     recurse: true
+#   loop:
+#     - "{{dir_root}}"
+#     - "{{dir_ignition}}"
+#     - "{{dir_butane}}"
+#     - "{{dir_iso_embedded}}"
+#     - "{{dir_iso_original}}"
+#     - "{{dir_network_configs}}"
+
+# Install some Tools
+# - name: Install butane
+#   yum:
+#     name: butane.x86_64
+#     state: present
+
+# - name: Install coreos-installer
+#   yum:
+#     name: coreos-installer.x86_64
+#     state: present
+
+# - name: Install ignition-validation
+#   yum:
+#     name: ignition-validate.x86_64
+#     state: present
+
+# Download original coreos-iso for manipulation
+- name: "Download original coreos-iso"
+  get_url:
+    url: "{{download_link_to_coreos_iso}}"
+    dest: "{{dir_iso_original}}coreos.iso"
+
+# Erstellung der Butane-Config-Files
+- name: "Create the Butane-YAML-File from templates-folder"
+  template:
+    src: "templates/butane-template.bu.j2"
+    dest: "{{dir_butane}}butane.bu"
+    mode: "0644"
+    # owner: "dnsmasq"
+    # group: "wheel"
+    force: yes
+
+# Erzeugung der Ignition Datei
+- name: "Create the ignition-file from butane.bu"
+  raw: "/usr/bin/butane --pretty {{dir_butane}}butane.bu --output {{dir_ignition}}butane.ign"
+ 
+# Falls vorhanden, Datei löschen
+# Führt ansonsten zu Fehlermeldung beim nächsten Schritt, wenn die Datei schon einmal erstellt wurde
+- name: "Remove existing coreos-embedded-butane-ign.iso"
+  ansible.builtin.file:
+    path: "{{dir_iso_embedded}}coreos-embedded-butane-ign.iso"
+    state: absent
+
+# Einbetten der Ignition-Datei in das ISO
+- name: "Embed the ignition-file butane.ign into iso"
+  raw: "/usr/bin/coreos-installer iso ignition embed -i {{dir_ignition}}butane.ign -o {{dir_iso_embedded}}coreos-embedded-butane-ign.iso {{dir_iso_original}}coreos.iso"
+
+# Copy butane.ign to http-folder
+- name: "Copy butane.ign to http-folder"
+  ansible.builtin.copy:
+    src: "{{dir_ignition}}butane.ign"
+    dest: "/var/www/html/butane.ign"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+    remote_src: yes
+
+# Copy ISO to NFS-Server
+- name: "Copy created coreos-embedded-butane-ign.iso to nfs-server"
+  ansible.builtin.copy:
+    src: "{{dir_iso_embedded}}coreos-embedded-butane-ign.iso"
+    dest: "/mnt/nfs-iso/downloaded-iso/linux/coreos-embedded-butane-ign.iso"
+    owner: "root"
+    group: "65537"
+    mode: '0644'
+    remote_src: yes
+
+# Anpassung des grub.cfg-config-Files

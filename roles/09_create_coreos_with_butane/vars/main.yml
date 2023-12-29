@@ -1,2 +1,9 @@
 ---
 # vars file for 09_create_coreos_with_butane
+dir_root: "/root/butane-workdir/"
+dir_butane: "{{dir_root}}butane-files/"
+dir_ignition: "{{dir_root}}ignition-files/"
+dir_iso_embedded: "{{dir_root}}iso-embedded/"
+dir_iso_original: "{{dir_root}}iso-original/"
+dir_network_configs: "{{dir_root}}network-configs/"
+download_link_to_coreos_iso: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20231119.3.0/x86_64/fedora-coreos-39.20231119.3.0-live.x86_64.iso"
