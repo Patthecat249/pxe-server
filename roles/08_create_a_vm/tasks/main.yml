@@ -43,7 +43,7 @@
     - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rhel77 }}"
     - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rocky89 }}"
     - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_fedora35 }}"
-    - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_fedora39_coreos }}"
+    - "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_fedora39 }}"
     - "{{ tftproot_path }}pxelinux.cfg/"
 
 
@@ -69,13 +69,13 @@
     group: "{{ dnsmasq_group }}"
 
 # Add a grub-config to TFTPROOT
-- name: Configure grub.cfg
+- name: "--- 06 - Configure grub.cfg"
   template: 
     src: "templates/grub.cfg.j2"
     dest: "{{ grub_cfg_path }}grub.cfg"
 
 # Extract the vmlinuz-kernels and initramdisks
-- name: "--- 06 - {{ os_name_centos76 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 07 - {{ os_name_centos76 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_centos76 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos76 }}/"
@@ -83,7 +83,7 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
-- name: "--- 07 - {{ os_name_centos77 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 08 - {{ os_name_centos77 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_centos77 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos77 }}/"
@@ -91,7 +91,7 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
-- name: "--- 08 - {{ os_name_centos78 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 09 - {{ os_name_centos78 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_centos78 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos78 }}/"
@@ -99,7 +99,7 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
-- name: "--- 09 - {{ os_name_rhel77 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 10 - {{ os_name_rhel77 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_rhel77 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rhel77 }}/"
@@ -107,7 +107,7 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
-- name: "--- 10 - {{ os_name_centos81 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 11 - {{ os_name_centos81 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_centos81 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos81 }}/"
@@ -115,7 +115,7 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
-- name: "--- 11a - {{ os_name_centos83 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 12 - {{ os_name_centos83 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_centos83 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_centos83 }}/"
@@ -123,7 +123,7 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
-- name: "--- 11b - {{ os_name_rocky89 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 13 - {{ os_name_rocky89 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_rocky89 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_rocky89 }}/"
@@ -131,7 +131,7 @@
     - isolinux/vmlinuz
     - isolinux/initrd.img
 
-- name: "--- 11c - {{ os_name_fedora35 }} - Extract kernel and ramdisk from a ISO"
+- name: "--- 14 - {{ os_name_fedora35 }} - Extract kernel and ramdisk from a ISO"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_fedora35 }}"
     dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_fedora35 }}/"
@@ -139,8 +139,24 @@
     - images/pxeboot/vmlinuz
     - images/pxeboot/initrd.img
 
+- name: "--- 15 - {{ os_name_fedora39 }} - Extract kernel and ramdisk from a ISO"
+  iso_extract:
+    image: "{{ mount_path }}{{ nfs_path_os_fedora39 }}"
+    dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_fedora39 }}/"
+    files:
+    - images/pxeboot/vmlinuz
+    - images/pxeboot/initrd.img
+
+- name: "--- 16 - {{ os_name_coreos39 }} - Extract kernel and ramdisk from a ISO"
+  iso_extract:
+    image: "{{ mount_path }}{{ nfs_path_os_fedora39 }}"
+    dest: "{{ tftproot_path }}{{ kernel_initrd_path }}{{ os_name_fedora39 }}/"
+    files:
+    - images/pxeboot/vmlinuz
+    - images/pxeboot/initrd.img
+
 # Extract grubx64.efi
-- name: "--- 11d - {{ os_name_rocky89 }} - Extract grubx64.efi"
+- name: "--- 17 - {{ os_name_rocky89 }} - Extract grubx64.efi"
   iso_extract:
     image: "{{ mount_path }}{{ nfs_path_os_rocky89 }}"
     dest: "{{ tftproot_path }}"
@@ -149,7 +165,7 @@
 
 
 # Default RHEL77-kickstart jinja-Template erstellen 
-- name: "--- 12 - Create RHEL77-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
+- name: "--- 18 - Create RHEL77-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
   template:
     src: "templates/default-rhel77.cfg"
     dest: "{{ mount_path }}kickstart-configs/{{ hostname }}-rhel77.cfg"
@@ -160,7 +176,7 @@
   when: "os_name_rhel77 is defined"
 
 # Default Fedora35-kickstart jinja-Template erstellen 
-- name: "--- 12 - Create Fedora35-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
+- name: "--- 19 - Create Fedora35-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
   template:
     src: "templates/kickstart-fedora35.j2"
     dest: "{{ mount_path }}kickstart-configs/{{ hostname }}-fedora35.cfg"
@@ -171,7 +187,7 @@
   when: "os_name_fedora35 is defined"
 
 # Terraform - Create main.tf from template
-- name: "--- 13 - Terraform - Create main.tf from jinja-template"
+- name: "--- 20 - Terraform - Create main.tf from jinja-template"
   template:
     src: "templates/{{ template_terraform_main_tf2 }}"
     dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/main.tf"
@@ -183,7 +199,7 @@
 
 
 # Terraform - Create variables.tf from template
-- name: "--- 14 - Terraform - Create variables.tf from jinja-template"
+- name: "--- 21 - Terraform - Create variables.tf from jinja-template"
   template:
     src: "templates/{{ template_terraform_variables_tf }}"
     dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/variables.tf"
@@ -194,6 +210,6 @@
   delegate_to: "127.0.0.1"
 
 # Erzeuge die virtuelle Maschine
-- name: "--- 15 Create virtual machine ({{ hostname }}) with terraform"
+- name: "--- 22 Create virtual machine ({{ hostname }}) with terraform"
   raw: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && /usr/local/bin/terraform init && /usr/local/bin/terraform apply -auto-approve"
   delegate_to: "127.0.0.1"
