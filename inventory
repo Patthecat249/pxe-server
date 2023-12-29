@@ -1,3 +1,5 @@
 [pxe]
 pxe-server
+
+[fedora]
 10.0.249.155
