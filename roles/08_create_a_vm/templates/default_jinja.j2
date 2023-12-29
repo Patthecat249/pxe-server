@@ -44,3 +44,8 @@ label 8
 menu label ^8) Install {{ os_name_rocky89 }} with default-kickstart
 kernel {{ kernel_initrd_path }}{{ os_name_rocky89 }}/vmlinuz
 append ip=dhcp initrd={{ kernel_initrd_path }}{{ os_name_rocky89 }}/initrd.img inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_rocky89}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_kickstart_configs}}{{ hostname }}.cfg
+
+label 9
+menu label ^9) Install {{ os_name_fedora35 }} with default-kickstart
+kernel {{ kernel_initrd_path }}{{ os_name_fedora35 }}/vmlinuz
+append ip=dhcp initrd={{ kernel_initrd_path }}{{ os_name_fedora35 }}/initrd.img inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_fedora35}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_kickstart_configs}}{{ hostname }}.cfg
