@@ -1,37 +1,37 @@
 ---
 # tasks file for 09_create_coreos_with_butane
 # Create some working directories
-# - name: "Create Butane-Working Directories"
-#   file:
-#     path: "{{ item }}"
-#     #owner: root
-#     #group: root
-#     #mode: '0755'
-#     state: directory
-#     recurse: true
-#   loop:
-#     - "{{dir_root}}"
-#     - "{{dir_ignition}}"
-#     - "{{dir_butane}}"
-#     - "{{dir_iso_embedded}}"
-#     - "{{dir_iso_original}}"
-#     - "{{dir_network_configs}}"
+- name: "Create Butane-Working Directories"
+  file:
+    path: "{{ item }}"
+    #owner: root
+    #group: root
+    #mode: '0755'
+    state: directory
+    recurse: true
+  loop:
+    - "{{dir_root}}"
+    - "{{dir_ignition}}"
+    - "{{dir_butane}}"
+    - "{{dir_iso_embedded}}"
+    - "{{dir_iso_original}}"
+    - "{{dir_network_configs}}"
 
 # Install some Tools
-# - name: Install butane
-#   yum:
-#     name: butane.x86_64
-#     state: present
+- name: Install butane
+  yum:
+    name: butane.x86_64
+    state: present
 
-# - name: Install coreos-installer
-#   yum:
-#     name: coreos-installer.x86_64
-#     state: present
+- name: Install coreos-installer
+  yum:
+    name: coreos-installer.x86_64
+    state: present
 
-# - name: Install ignition-validation
-#   yum:
-#     name: ignition-validate.x86_64
-#     state: present
+- name: Install ignition-validation
+  yum:
+    name: ignition-validate.x86_64
+    state: present
 
 # Download original coreos-iso for manipulation
 - name: "Download original coreos-iso"

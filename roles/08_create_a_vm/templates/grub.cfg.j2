@@ -22,8 +22,8 @@ search --no-floppy --set=root -l 'Rocky-8-9-x86_64-dvd'
 ### BEGIN /etc/grub.d/10_linux ###
 # This load the vmlinuz-kernel load it ignition-config and installs coreos from rootfs with butane.ign-file
 menuentry 'CoreOS Automated Installation Test' --class fedora --class gnu-linux --class gnu --class os {
-        linuxefi /kernels_initrd/fedora39/vmlinuz ignition.firstboot ignition.platform.id=metal ignition.config.url=http://10.0.249.155/butane.ign coreos.live.rootfs_url=http://10.0.249.155/rootfs.img coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://10.0.249.155/butane.ign coreos.inst.platform_id=metal
-        initrdefi /kernels_initrd/fedora39/initrd.img
+        linuxefi /{{kernel_initrd_path}}{{ os_name_coreos39 }}/vmlinuz ignition.firstboot ignition.platform.id=metal ignition.config.url=http://10.0.249.155/butane.ign coreos.live.rootfs_url=http://10.0.249.155/rootfs.img coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://10.0.249.155/butane.ign coreos.inst.platform_id=metal
+        initrdefi /{{kernel_initrd_path}}{{ os_name_coreos39 }}/initrd.img
 }
 # Rocky-Linux-89
 menuentry 'Install Rocky-Linux-89' --class fedora --class gnu-linux --class gnu --class os {
@@ -37,6 +37,6 @@ menuentry 'Install Fedora-Server-35' --class fedora --class gnu-linux --class gn
 }
 # Fedora-Linux-39
 menuentry 'Install Fedora-Server-39' --class fedora --class gnu-linux --class gnu --class os {
-        linuxefi /{{kernel_initrd_path}}{{ os_name_fedora39 }}/vmlinuz inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_fedora39}} inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}kickstart-configs/{{ hostname }}-fedora39.cfg quiet
+        linuxefi /{{kernel_initrd_path}}{{ os_name_fedora39 }}/vmlinuz inst.repo=nfs:{{nfs_server_name}}:{{nfs_path}}{{nfs_path_os_fedora39}} inst.stage2=hd:LABEL=Fedora-S-dvd-x86_64-39 inst.ks=nfs:{{nfs_server_name}}:{{nfs_path}}kickstart-configs/{{ hostname }}-fedora39.cfg quiet
         initrdefi /{{kernel_initrd_path}}{{ os_name_fedora39 }}/initrd.img
 }
