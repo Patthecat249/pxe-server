@@ -175,8 +175,19 @@
     force: yes
   when: "os_name_rhel77 is defined"
 
+# Default Rocky89-kickstart jinja-Template erstellen 
+- name: "--- 19a - Create Rocky89-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
+  template:
+    src: "templates/kickstart-rocky89.j2"
+    dest: "{{ mount_path }}kickstart-configs/{{ hostname }}-rocky89.cfg"
+    mode: "0644"
+    owner: "1027"
+    group: "users"
+    force: yes
+  when: "os_name_rocky89 is defined"
+
 # Default Fedora35-kickstart jinja-Template erstellen 
-- name: "--- 19 - Create Fedora35-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
+- name: "--- 19b - Create Fedora35-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
   template:
     src: "templates/kickstart-fedora35.j2"
     dest: "{{ mount_path }}kickstart-configs/{{ hostname }}-fedora35.cfg"
@@ -185,6 +196,17 @@
     group: "users"
     force: yes
   when: "os_name_fedora35 is defined"
+
+# Default Fedora39-kickstart jinja-Template erstellen 
+- name: "--- 19c - Create Fedora39-Kickstart-File from jinja-Template, Save on mounted filesystem from NFS-Server"
+  template:
+    src: "templates/kickstart-fedora39.j2"
+    dest: "{{ mount_path }}kickstart-configs/{{ hostname }}-fedora39.cfg"
+    mode: "0644"
+    owner: "1027"
+    group: "users"
+    force: yes
+  when: "os_name_fedora39 is defined"
 
 # Terraform - Create main.tf from template
 - name: "--- 20 - Terraform - Create main.tf from jinja-template"

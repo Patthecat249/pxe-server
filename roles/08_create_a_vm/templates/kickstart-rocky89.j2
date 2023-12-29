@@ -1,0 +1,44 @@
+#version=RHEL8
+# Use graphical install
+graphical
+
+%packages
+@^minimal-environment
+
+%end
+
+# Keyboard layouts
+keyboard --xlayouts='de'
+# System language
+lang en_US.UTF-8
+
+# Network information
+network  --bootproto=dhcp --device=ens33 --nameserver={{dns_server_ip}} --onboot=off --ipv6=auto --no-activate
+network  --hostname={{ hostname }}.{{ domain }}
+
+# Use NFS installation media
+nfs --server={{nfs_server_name}} --dir={{nfs_path}}{{nfs_path_os_rocky89}}
+
+# Run the Setup Agent on first boot
+firstboot --enable
+
+ignoredisk --only-use=sda
+autopart
+# Partition clearing information
+clearpart --none --initlabel
+
+# System timezone
+timezone Europe/Berlin --isUtc --nontp
+
+# Root password
+rootpw --iscrypted $6$.eqqrJYtqOH3xKZf$HFIOFhGRYX2f3/pW7AlFQmq8Y26kBhLk0TS5R.wWNBgp6WZmjIQk21VwfnXOs1hUyqD3.NNHTArUBSgi0Sy1/.
+
+%addon com_redhat_kdump --disable --reserve-mb='auto'
+
+%end
+
+%anaconda
+pwpolicy root --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+pwpolicy user --minlen=6 --minquality=1 --notstrict --nochanges --emptyok
+pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
+%end
