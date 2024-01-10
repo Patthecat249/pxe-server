@@ -12,3 +12,5 @@
       ansible.builtin.import_role:
         name: 09_create_coreos_with_butane
 
+# How to install coreos manually on /dev/sda
+# sudo coreos-installer install /dev/sda --ignition-url=http://10.0.249.155/butane.ign --insecure-ignition
