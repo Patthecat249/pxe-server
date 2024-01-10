@@ -83,5 +83,6 @@
     group: "65537"
     mode: '0644'
     remote_src: yes
+    force: true
 
 # Anpassung des grub.cfg-config-Files

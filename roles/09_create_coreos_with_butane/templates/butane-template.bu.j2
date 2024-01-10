@@ -40,6 +40,36 @@ storage:
           dns-search=home.local
           may-fail=false
           method=manual
+    - path: /etc/NetworkManager/system-connections/ens34.nmconnection
+      mode: 0600
+      contents:
+        inline: |
+          [connection]
+          id=ens34
+          type=ethernet
+          interface-name=ens34
+          [ipv4]
+          address1=11.11.11.250/24,11.11.11.1
+          dhcp-hostname=coreos
+          dns=10.0.249.53;8.8.8.8
+          dns-search=home.local
+          may-fail=false
+          method=manual
+    - path: /etc/NetworkManager/system-connections/ens35.nmconnection
+      mode: 0600
+      contents:
+        inline: |
+          [connection]
+          id=ens35
+          type=ethernet
+          interface-name=ens35
+          [ipv4]
+          address1=11.11.12.250/24,11.11.12.1
+          dhcp-hostname=coreos
+          dns=10.0.249.53;8.8.8.8
+          dns-search=home.local
+          may-fail=false
+          method=manual
     - path: /etc/hostname
       mode: 0644
       contents:
