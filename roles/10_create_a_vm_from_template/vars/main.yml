@@ -1,0 +1,43 @@
+---
+# vars file for 10_create_a_vm_from_template
+
+# Working Directories
+dir_work: "/opt/sva/"
+dir_terraform: "terraform/"
+
+# Terraform
+template_terraform_main_tf: "main_tf.j2"
+template_terraform_main_tf2: "main_tf2.j2"
+template_terraform_variables_tf: "variables_tf.j2"
+
+
+# vsphere
+
+vsphere_folder: "/dc-home/vm/homelab"
+vsphere_vmtemplate_name: "template-rockylinux8-9"
+vsphere_server: "vcenter.home.local"
+vsphere_user: "administrator@home.local"
+vsphere_pass: "Test1234!"
+vsphere_datacenter: "dc-home"
+vsphere_cluster: "cluster-home"
+vsphere_rp: "rp-home"
+vsphere_network: "openshift-12"
+vsphere_folder_tf: "homelab"
+vsphere_datastore: "esx-datengrab"
+vsphere_hardware_version: "21"
+
+vm:
+  hostname: "bastion-host"
+  domain: "home.local"
+  cpu: "4"
+  ram: "16384"
+  disk: "120"
+  os_type: "centos8_64Guest"
+  # os_type: "rocky8_64Guest"
+  firmware: "bios"
+  vsphere_hardware_version: "21"
+  ip:
+    address: "11.11.12.120"
+    subnet: "24"
+    gateway: "11.11.12.1"
+    dns1: "10.0.249.53"

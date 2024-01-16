@@ -1,0 +1,82 @@
+provider "vsphere" {
+  vsphere_server = var.vsphere_server
+  user = var.vsphere_user
+  password = var.vsphere_password
+  allow_unverified_ssl = true
+}
+
+# --- VARIABLE-DECLARATION
+
+data "vsphere_datacenter" "dc" {
+  name = var.vsphere_datacenter
+}
+
+data "vsphere_compute_cluster" "cluster" {
+  name = var.vsphere_compute_cluster
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+data "vsphere_resource_pool" "pool" {
+  name = var.vsphere_resource_pool
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+data "vsphere_datastore" "datastore" {
+  name = var.vsphere_datastore
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+data "vsphere_network" "network" {
+  name = var.vsphere_network
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+data "vsphere_virtual_machine" "template" {
+  name          = "{{vsphere_vmtemplate_name}}"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+variable "ocp-folder" {
+  default = "{{vsphere_folder}}"
+}
+
+
+# --- Create VM OCP-Bastion-Host --- #
+resource "vsphere_virtual_machine" "{{ vm.hostname }}" {
+
+  name = var.vm_name
+  folder = var.ocp-folder
+  guest_id = var.guest_id_tag
+  resource_pool_id = data.vsphere_resource_pool.pool.id
+  firmware = "{{ vm.firmware }}"
+  datastore_id = data.vsphere_datastore.datastore.id
+  num_cpus = "{{ vm.cpu }}"
+  memory = "{{ vm.ram }}"
+  wait_for_guest_ip_timeout = 0
+  wait_for_guest_net_timeout = 0
+  hardware_version = "{{ vm.vsphere_hardware_version }}"
+  network_interface {
+    network_id = data.vsphere_network.network.id
+    adapter_type = "vmxnet3"
+  }
+  disk {
+    label = "rootvolume"
+    size  = "{{ vm.disk }}"
+    thin_provisioned  = "true"
+  }
+  clone {
+    template_uuid = data.vsphere_virtual_machine.template.id
+    customize {
+      linux_options {
+        host_name = "{{ vm.hostname }}"
+        domain = "{{ vm.domain }}"
+      }
+      network_interface {
+        ipv4_address = "{{vm.ip.address}}"
+        ipv4_netmask = "{{vm.ip.subnet}}"
+      }
+      ipv4_gateway = "{{vm.ip.gateway}}"
+      dns_server_list = ["{{vm.ip.dns1}}"]
+    }
+  }
+}

@@ -1,0 +1,46 @@
+# vcenter-connection
+variable "vsphere_server" {
+  default = "{{vsphere_server}}"
+}
+
+variable "vsphere_user" {
+  default = "{{vsphere_user}}"
+}
+
+variable "vsphere_password" {
+  default = "{{vsphere_pass}}"
+}
+
+# VM-name
+variable "vm_name" {
+  default = "{{ hostname }}"
+}
+
+variable "vm_folder" {
+  default = "{{vsphere_folder_tf}}"
+}
+
+variable "guest_id_tag" {
+  default = "{{ vm.os_type }}"
+}
+
+# vcenter-objects
+variable "vsphere_datacenter" {
+  default = "{{vsphere_datacenter}}"
+}
+
+variable "vsphere_compute_cluster" {
+  default = "{{vsphere_cluster}}"
+}
+
+variable "vsphere_resource_pool" {
+  default = "{{vsphere_rp}}"
+}
+
+variable "vsphere_datastore" {
+  default = "{{vsphere_datastore}}"
+}
+
+variable "vsphere_network" {
+  default = "{{vsphere_network}}"
+}

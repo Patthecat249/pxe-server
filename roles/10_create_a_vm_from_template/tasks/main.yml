@@ -1,0 +1,44 @@
+---
+# tasks file for 10_create_a_vm_from_template
+# Erstelle Arbeitsverzeichnisse
+
+- name: "--- 01 - Create Working Directories on localhost"
+  file:
+    path: "{{ item }}"
+    #owner: root
+    #group: root
+    #mode: '0755'
+    state: directory
+    recurse: true
+  with_items:
+    - "{{ dir_work }}{{ dir_terraform }}{{ hostname }}"
+  delegate_to: "127.0.0.1"
+
+
+# Terraform - Create main.tf from template
+- name: "--- 02 - Terraform - Create main.tf from jinja-template"
+  template:
+    src: "templates/{{ template_terraform_main_tf2 }}"
+    dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/main.tf"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    force: yes
+  delegate_to: "127.0.0.1"
+
+
+# Terraform - Create variables.tf from template
+- name: "--- 03 - Terraform - Create variables.tf from jinja-template"
+  template:
+    src: "templates/{{ template_terraform_variables_tf }}"
+    dest: "{{ dir_work }}{{ dir_terraform }}{{ hostname }}/variables.tf"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+    force: yes
+  delegate_to: "127.0.0.1"
+
+# Erzeuge die virtuelle Maschine
+- name: "--- 04 Create virtual machine ({{ hostname }}) with terraform"
+  raw: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && /usr/local/bin/terraform init && /usr/local/bin/terraform apply -auto-approve"
+  delegate_to: "127.0.0.1"
