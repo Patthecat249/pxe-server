@@ -1,0 +1,13 @@
+# This is the main playbook, which loads all sub-plays with all the tasks and executes them step by step
+
+- hosts: pxe
+  gather_facts: false
+  become: yes
+  tasks:
+# Install all the prerequisites on the remote PXE-Server. We need some Services which.
+
+    - name: Create a vm from vm-template
+      ansible.builtin.include_role:
+        name: 10_create_a_vm_from_template
+
+

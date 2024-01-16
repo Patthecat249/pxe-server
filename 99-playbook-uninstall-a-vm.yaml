@@ -1,0 +1,12 @@
+# This is the main playbook, which loads all sub-plays with all the tasks and executes them step by step
+
+- hosts: pxe
+  gather_facts: false
+  become: yes
+  tasks:
+# Install all the prerequisites on the remote PXE-Server. We need some Services which.
+
+    - name: Delete a vm 
+      ansible.builtin.import_role:
+        name: 99_uninstall_a_vm
+

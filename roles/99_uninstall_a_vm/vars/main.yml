@@ -1,0 +1,5 @@
+---
+# vars file for 99_uninstall_a_vm
+# Working Directories
+dir_work: "/opt/sva/"
+dir_terraform: "terraform/"

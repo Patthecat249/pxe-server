@@ -42,41 +42,41 @@ variable "ocp-folder" {
 
 
 # --- Create VM OCP-Bastion-Host --- #
-resource "vsphere_virtual_machine" "{{ vm.hostname }}" {
+resource "vsphere_virtual_machine" "{{ hostname }}" {
 
   name = var.vm_name
   folder = var.ocp-folder
   guest_id = var.guest_id_tag
   resource_pool_id = data.vsphere_resource_pool.pool.id
-  firmware = "{{ vm.firmware }}"
+  firmware = "{{ firmware }}"
   datastore_id = data.vsphere_datastore.datastore.id
-  num_cpus = "{{ vm.cpu }}"
-  memory = "{{ vm.ram }}"
+  num_cpus = "{{ cpu }}"
+  memory = "{{ ram }}"
   wait_for_guest_ip_timeout = 0
   wait_for_guest_net_timeout = 0
-  hardware_version = "{{ vm.vsphere_hardware_version }}"
+  hardware_version = "{{ vsphere_hardware_version }}"
   network_interface {
     network_id = data.vsphere_network.network.id
     adapter_type = "vmxnet3"
   }
   disk {
     label = "rootvolume"
-    size  = "{{ vm.disk }}"
+    size  = "{{ disk }}"
     thin_provisioned  = "true"
   }
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
     customize {
       linux_options {
-        host_name = "{{ vm.hostname }}"
-        domain = "{{ vm.domain }}"
+        host_name = "{{ hostname }}"
+        domain = "{{ domain }}"
       }
       network_interface {
-        ipv4_address = "{{vm.ip.address}}"
-        ipv4_netmask = "{{vm.ip.subnet}}"
+        ipv4_address = "{{ipaddress}}"
+        ipv4_netmask = "{{subnet}}"
       }
-      ipv4_gateway = "{{vm.ip.gateway}}"
-      dns_server_list = ["{{vm.ip.dns1}}"]
+      ipv4_gateway = "{{gateway}}"
+      dns_server_list = ["{{dns1}}"]
     }
   }
 }

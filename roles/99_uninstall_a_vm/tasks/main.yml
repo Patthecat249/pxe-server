@@ -1,0 +1,15 @@
+---
+# tasks file for 99_uninstall_a_vm
+# Delete the virtual machine
+- name: "--- 01 Delete the virtual machine ({{ hostname }}) with terraform"
+  raw: "cd {{ dir_work }}{{ dir_terraform }}{{ hostname }} && /usr/local/bin/terraform init && /usr/local/bin/terraform destroy -auto-approve"
+  delegate_to: "127.0.0.1"
+
+# remove the Terraform-Directory
+- name: "Delete the Terraform-Directory of {{ hostname }}"
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ dir_work }}{{ dir_terraform }}{{ hostname }}"
+  delegate_to: "127.0.0.1"

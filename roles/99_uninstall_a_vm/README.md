@@ -22,15 +22,20 @@ Example Playbook
 ----------------
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+# Code of a Playbook
+- hosts: pxe
+  gather_facts: false
+  become: yes
+  tasks:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
+    - name: Delete a vm 
+      ansible.builtin.import_role:
+        name: 99_uninstall_a_vm
+```
 ```bash
-# Examples
-# Execute the playbook 
-ansible-playbook 05-playbook-create-a-vm-from-template.yaml -e "hostname=artifactory cpu=4 mem=8192 disk=500 ipaddress=10.0.249.82 vsphere_network=pg-home"
+# Execute the playbook with extra-vars
+ansible-playbook 99-playbook-uninstall-a-vm.yaml -e "hostname=bla"
 ```
 
 License
