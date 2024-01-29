@@ -1,6 +1,7 @@
 # This is the main playbook, which loads all sub-plays with all the tasks and executes them step by step
 
-- hosts: 10.0.249.155
+# - hosts: 10.0.249.155
+- hosts: 127.0.0.1
   gather_facts: false
   become: yes
   vars:

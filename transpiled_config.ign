@@ -1,0 +1,86 @@
+{
+  "ignition": {
+    "version": "3.3.0"
+  },
+  "passwd": {
+    "users": [
+      {
+        "name": "core",
+        "sshAuthorizedKeys": [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbwtcFEfty86gZxv/59he46gusMu+Nh+2YIIlU5Z/ROi6zb4u7ySLkNbdouVh5cGcrtySe2WoG5xxLrat8uT87x40glmivDi3UCQsL5+3MDCVlcj6rMTbtehvcIqub9ZUnVGrD50d8eQUAtgYo1FGbL1fXRmmFXorBr3bb6hk+UyYrfcmxNGsCksGm5k+AN4j126fN+Q3rWu7zg7vhp9K1FsYXC/19AzuU5YWGCoa2nRwZ89xRgEmIyk0wKNlO44DWieNr6G9pM+WRLrkByAm03yFKWt2sKB6lolKkKy0DWENc0Ik/OGJIhzuJAuz6A5mfNhJucHHjoRJThEmVzJxPcWQkeBTUN4hRr1kOiUezaC33gNNvvmAT/w5idCqX+LF8eM4wePgOvL/L29LanA0ZWgmzZZMUcL530Uo/FO4I2d8ynvDlUlhKVbDGVTu2Hf7KY1sSWPgWl3x4GB9pBJBo5FVr9uUKted27cKme9BAWSFTR9VB1FI+g5FDQ+02QCc= root@fedora35"
+        ]
+      }
+    ]
+  },
+  "storage": {
+    "files": [
+      {
+        "path": "/etc/vconsole.conf",
+        "contents": {
+          "compression": "",
+          "source": "data:,KEYMAP%3Dde"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/etc/NetworkManager/system-connections/ens33.nmconnection",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/0TLXQrCMBAE4Pc9i4n9BUVyktKHJdmSQLJbslHo7cUiyjzNMN/ihZl8S8IrpOCIdRyhHTs5apEqU4PEjeqGngxjoe9lSftrWgFDqKTau76znR2mux3m7jpMl1/vIUS/myjaTu6lkigE1r+Zx8fNnvnsRgmrjy5KIZvFY4aCh9kwZbdhVoJCLUpwBfmJGd4BAAD//0sG1M7EAAAA"
+        },
+        "mode": 384
+      },
+      {
+        "path": "/etc/NetworkManager/system-connections/ens34.nmconnection",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/zyL0WrEIBBF3+dbqo2JgZbil4Q8DDpBQWeCYwv5+7LZZbn35V7O2aIwUxxFeIeSArEuHsZ1UqCRqTMNKDyoHxjJMDZ6IVs5//wOmFInVRecs8/O6/Q5+4/3dpByPE0WHbcepZMoJNbgJjvZ2X/bdfn5sncev1HCHnPI0shWiVih4WUOLDUcWJWg0ciSQkP+xQr/AQAA//+jw7yrxAAAAA=="
+        },
+        "mode": 384
+      },
+      {
+        "path": "/etc/NetworkManager/system-connections/ens35.nmconnection",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/zyL0WrFIBBE3/dbqo0mgZbil4Q8LLpBQXeDawv5+5Jwucy8zHDOFoWZ4ijCO5QUiHVeYVwnBRqZOtOAwoP6gZEMY6MXspXzb9kBU+qk6oJz9q63fp0+/fLx3g5SjqfJouPRo3QShcQa3GQn65dvu84/X/bJ/Rsl7DGHLI1slYgVGl7mwFLDgVUJGo0sKTTkX6zwHwAA//8VIc2SxAAAAA=="
+        },
+        "mode": 384
+      },
+      {
+        "path": "/etc/hostname",
+        "contents": {
+          "compression": "",
+          "source": "data:,coreos%0A"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/etc/profile.d/systemd-pager.sh",
+        "contents": {
+          "compression": "",
+          "source": "data:,%23%20Tell%20systemd%20to%20not%20use%20a%20pager%20when%20printing%20information%0Aexport%20SYSTEMD_PAGER%3Dcat"
+        },
+        "mode": 420
+      }
+    ],
+    "links": [
+      {
+        "path": "/etc/localtime",
+        "target": "../usr/share/zoneinfo/Europe/Berlin"
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "dropins": [
+          {
+            "contents": "[Service]\n# Override Execstart in main unit\nExecStart=\n# Add new Execstart with `-` prefix to ignore failure`\nExecStart=-/usr/sbin/agetty --autologin core --noclear %I $TERM\n",
+            "name": "autologin-core.conf"
+          }
+        ],
+        "name": "serial-getty@ttyS0.service"
+      }
+    ]
+  }
+}
